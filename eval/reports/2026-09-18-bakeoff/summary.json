@@ -1,0 +1,1558 @@
+{
+  "runId": "2026-09-18-bakeoff",
+  "results": 1200,
+  "expectedResults": 1200,
+  "complete": true,
+  "reportCodeHashes": {
+    "scripts/eval/report.ts": "4b39d6e5a2e916af968da40f18d8ab9aa04213a499814d12083daef89b87a5dc",
+    "scripts/eval/metrics.ts": "09095558d28eda30e9a1e6aafc9be191ca6680a676991ae0132b8d08024eb914"
+  },
+  "cells": [
+    {
+      "model": "gemma-4-E2B-it-UD-MLX-4bit",
+      "backgroundWords": 0,
+      "complete": true,
+      "macroTaskAccuracy": 0.4583333333333333,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 13,
+          "effectiveAccuracy": 0.325,
+          "validAccuracy": 0.325,
+          "effectiveAccuracy95Wilson": [
+            0.200845022317827,
+            0.47982253810122333
+          ],
+          "macroF1": 0.22291275797373358,
+          "brier": 1.1324091647002497,
+          "nll": 6.90576421329083,
+          "ece": 0.5436549707602341,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              0,
+              4,
+              1
+            ],
+            [
+              7,
+              0,
+              2,
+              1
+            ],
+            [
+              9,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 28,
+          "effectiveAccuracy": 0.7,
+          "validAccuracy": 0.7,
+          "effectiveAccuracy95Wilson": [
+            0.5456998118185507,
+            0.8192515477025347
+          ],
+          "macroF1": 0.6930946291560103,
+          "brier": 0.26170139444445,
+          "nll": 5.710648208391421,
+          "ece": 0.22958334999999985,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              17,
+              3
+            ],
+            [
+              9,
+              11
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 14,
+          "effectiveAccuracy": 0.35,
+          "validAccuracy": 0.35,
+          "effectiveAccuracy95Wilson": [
+            0.2213452887317629,
+            0.5049411916274231
+          ],
+          "macroF1": 0.28793650793650793,
+          "brier": 0.8232614766877134,
+          "nll": 7.05635169081072,
+          "ece": 0.29231625258799177,
+          "scoreMAE": 0.9261356107660458,
+          "confusion": [
+            [
+              2,
+              0,
+              5,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              7,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              3,
+              2
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              1
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 120,
+        "retriedRequests": 0,
+        "additionalAttempts": 0,
+        "latencyP50Ms": 522.1696039999997,
+        "latencyP95Ms": 641.6804541499841,
+        "latencyMeanMs": 501.57075832499976,
+        "totalSeconds": 60.188490998999974,
+        "effectiveRequestsPerSecond": 1.993736643139862,
+        "inputTokensMean": 331.775,
+        "outputTokensMean": 40.35,
+        "firstAttemptInputTokensMean": 331.775,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "gemma-4-E2B-it-UD-MLX-4bit",
+      "backgroundWords": 2048,
+      "complete": true,
+      "macroTaskAccuracy": 0.4083333333333334,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 39,
+          "correct": 11,
+          "effectiveAccuracy": 0.275,
+          "validAccuracy": 0.28205128205128205,
+          "effectiveAccuracy95Wilson": [
+            0.16108016247667337,
+            0.42834955806210573
+          ],
+          "macroF1": 0.22732974910394263,
+          "brier": 1.3621464255177789,
+          "nll": 15.407646445985462,
+          "ece": 0.7015661336713968,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              6,
+              0,
+              1,
+              3
+            ],
+            [
+              3,
+              0,
+              4,
+              2
+            ],
+            [
+              6,
+              0,
+              3,
+              1
+            ],
+            [
+              6,
+              0,
+              2,
+              2
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 32,
+          "effectiveAccuracy": 0.8,
+          "validAccuracy": 0.8,
+          "effectiveAccuracy95Wilson": [
+            0.652426936536005,
+            0.895000102745623
+          ],
+          "macroF1": 0.7916666666666667,
+          "brier": 0.2,
+          "nll": 5.52620422318571,
+          "ece": 0.2,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              12,
+              8
+            ],
+            [
+              0,
+              20
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 38,
+          "correct": 6,
+          "effectiveAccuracy": 0.15,
+          "validAccuracy": 0.15789473684210525,
+          "effectiveAccuracy95Wilson": [
+            0.07061187717320358,
+            0.2907232436648971
+          ],
+          "macroF1": 0.08811594202898551,
+          "brier": 1.3226120857699804,
+          "nll": 14.548083482512544,
+          "ece": 0.5953216374269006,
+          "scoreMAE": 1.625438596491228,
+          "confusion": [
+            [
+              0,
+              0,
+              2,
+              0,
+              6
+            ],
+            [
+              0,
+              0,
+              6,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5
+            ],
+            [
+              0,
+              0,
+              2,
+              0,
+              5
+            ],
+            [
+              0,
+              0,
+              4,
+              0,
+              4
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 3,
+        "firstPassValid": 99,
+        "retriedRequests": 21,
+        "additionalAttempts": 28,
+        "latencyP50Ms": 698.3115004999945,
+        "latencyP95Ms": 2075.7175583500016,
+        "latencyMeanMs": 908.7990010499996,
+        "totalSeconds": 109.05588012599995,
+        "effectiveRequestsPerSecond": 1.0728444891263236,
+        "inputTokensMean": 3831.425,
+        "outputTokensMean": 56.958333333333336,
+        "firstAttemptInputTokensMean": 3087.325,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 5,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "gemma-4-E4B-it-UD-MLX-4bit",
+      "backgroundWords": 0,
+      "complete": true,
+      "macroTaskAccuracy": 0.6333333333333333,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 26,
+          "effectiveAccuracy": 0.65,
+          "validAccuracy": 0.65,
+          "effectiveAccuracy95Wilson": [
+            0.49505880837257693,
+            0.7786547112682372
+          ],
+          "macroF1": 0.6344537815126049,
+          "brier": 0.6371487499999998,
+          "nll": 6.599361941976035,
+          "ece": 0.2932499999999998,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              7,
+              2,
+              0
+            ],
+            [
+              3,
+              0,
+              6,
+              1
+            ],
+            [
+              4,
+              0,
+              3,
+              3
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 30,
+          "effectiveAccuracy": 0.75,
+          "validAccuracy": 0.75,
+          "effectiveAccuracy95Wilson": [
+            0.5980603857923197,
+            0.858128813609037
+          ],
+          "macroF1": 0.7474747474747474,
+          "brier": 0.242875,
+          "nll": 5.052013087827353,
+          "ece": 0.26249999999999996,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              17,
+              3
+            ],
+            [
+              7,
+              13
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 20,
+          "effectiveAccuracy": 0.5,
+          "validAccuracy": 0.5,
+          "effectiveAccuracy95Wilson": [
+            0.35199526933465386,
+            0.6480047306653461
+          ],
+          "macroF1": 0.4393861892583121,
+          "brier": 0.7653229629629629,
+          "nll": 6.888702793061583,
+          "ece": 0.2636111111111111,
+          "scoreMAE": 0.6108333333333335,
+          "confusion": [
+            [
+              5,
+              3,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              3,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              5,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              7,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              7,
+              0
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 117,
+        "retriedRequests": 3,
+        "additionalAttempts": 3,
+        "latencyP50Ms": 543.1517710000044,
+        "latencyP95Ms": 713.5772375000058,
+        "latencyMeanMs": 563.7202941166714,
+        "totalSeconds": 67.64643529400058,
+        "effectiveRequestsPerSecond": 1.773929394482706,
+        "inputTokensMean": 341.68333333333334,
+        "outputTokensMean": 28.341666666666665,
+        "firstAttemptInputTokensMean": 331.775,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "gemma-4-E4B-it-UD-MLX-4bit",
+      "backgroundWords": 2048,
+      "complete": true,
+      "macroTaskAccuracy": 0.5,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 30,
+          "effectiveAccuracy": 0.75,
+          "validAccuracy": 0.75,
+          "effectiveAccuracy95Wilson": [
+            0.5980603857923197,
+            0.858128813609037
+          ],
+          "macroF1": 0.739069264069264,
+          "brier": 0.45270375000000007,
+          "nll": 3.8358678208886468,
+          "ece": 0.17824999999999994,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              9,
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              9,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              8,
+              0
+            ],
+            [
+              1,
+              0,
+              5,
+              4
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 25,
+          "effectiveAccuracy": 0.625,
+          "validAccuracy": 0.625,
+          "effectiveAccuracy95Wilson": [
+            0.47032439137301096,
+            0.7577702083276673
+          ],
+          "macroF1": 0.6190476190476191,
+          "brier": 0.3527575,
+          "nll": 7.917725071872098,
+          "ece": 0.3667499999999999,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              15,
+              5
+            ],
+            [
+              10,
+              10
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 5,
+          "effectiveAccuracy": 0.125,
+          "validAccuracy": 0.125,
+          "effectiveAccuracy95Wilson": [
+            0.05459500250945401,
+            0.261121198388511
+          ],
+          "macroF1": 0.0865203761755486,
+          "brier": 1.3926256299102135,
+          "nll": 15.89457873083264,
+          "ece": 0.6607070707070707,
+          "scoreMAE": 1.7482790404040405,
+          "confusion": [
+            [
+              0,
+              0,
+              0,
+              1,
+              7
+            ],
+            [
+              2,
+              0,
+              0,
+              1,
+              5
+            ],
+            [
+              0,
+              0,
+              0,
+              3,
+              5
+            ],
+            [
+              1,
+              0,
+              0,
+              4,
+              3
+            ],
+            [
+              0,
+              0,
+              2,
+              5,
+              1
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 119,
+        "retriedRequests": 1,
+        "additionalAttempts": 1,
+        "latencyP50Ms": 1079.3618750000023,
+        "latencyP95Ms": 1298.5445357500153,
+        "latencyMeanMs": 1103.3159520750012,
+        "totalSeconds": 132.39791424900014,
+        "effectiveRequestsPerSecond": 0.9063586891128553,
+        "inputTokensMean": 3112.8083333333334,
+        "outputTokensMean": 25.991666666666667,
+        "firstAttemptInputTokensMean": 3087.325,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "gemma-4-26b-a4b-it-UD-MLX-4bit",
+      "backgroundWords": 0,
+      "complete": true,
+      "macroTaskAccuracy": 0.75,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 35,
+          "effectiveAccuracy": 0.875,
+          "validAccuracy": 0.875,
+          "effectiveAccuracy95Wilson": [
+            0.738878801611489,
+            0.945404997490546
+          ],
+          "macroF1": 0.8693181818181819,
+          "brier": 0.22708625000000002,
+          "nll": 0.4513914658783684,
+          "ece": 0.09099999999999991,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              10,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              9,
+              0
+            ],
+            [
+              1,
+              0,
+              3,
+              6
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 34,
+          "effectiveAccuracy": 0.85,
+          "validAccuracy": 0.85,
+          "effectiveAccuracy95Wilson": [
+            0.709276756335103,
+            0.9293881228267964
+          ],
+          "macroF1": 0.85,
+          "brier": 0.150125,
+          "nll": 3.5257570222664407,
+          "ece": 0.14749999999999996,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              17,
+              3
+            ],
+            [
+              3,
+              17
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 21,
+          "effectiveAccuracy": 0.525,
+          "validAccuracy": 0.525,
+          "effectiveAccuracy95Wilson": [
+            0.3749736210669248,
+            0.670645298873211
+          ],
+          "macroF1": 0.5038235194756934,
+          "brier": 0.6744783166666999,
+          "nll": 2.9292823317375785,
+          "ece": 0.2653333,
+          "scoreMAE": 0.533,
+          "confusion": [
+            [
+              8,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              2,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              4,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              4,
+              4
+            ],
+            [
+              0,
+              0,
+              0,
+              5,
+              3
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 120,
+        "retriedRequests": 0,
+        "additionalAttempts": 0,
+        "latencyP50Ms": 675.220604000031,
+        "latencyP95Ms": 873.9052878000831,
+        "latencyMeanMs": 681.4636277166724,
+        "totalSeconds": 81.77563532600068,
+        "effectiveRequestsPerSecond": 1.4674297487462726,
+        "inputTokensMean": 335.775,
+        "outputTokensMean": 27.925,
+        "firstAttemptInputTokensMean": 335.775,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "gemma-4-26b-a4b-it-UD-MLX-4bit",
+      "backgroundWords": 2048,
+      "complete": true,
+      "macroTaskAccuracy": 0.6916666666666668,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 34,
+          "effectiveAccuracy": 0.85,
+          "validAccuracy": 0.85,
+          "effectiveAccuracy95Wilson": [
+            0.709276756335103,
+            0.9293881228267964
+          ],
+          "macroF1": 0.8453674948240165,
+          "brier": 0.28353875,
+          "nll": 2.3135203676276586,
+          "ece": 0.14199999999999985,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              10,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              8,
+              0
+            ],
+            [
+              1,
+              0,
+              3,
+              6
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 34,
+          "effectiveAccuracy": 0.85,
+          "validAccuracy": 0.85,
+          "effectiveAccuracy95Wilson": [
+            0.709276756335103,
+            0.9293881228267964
+          ],
+          "macroF1": 0.849624060150376,
+          "brier": 0.15306250000000002,
+          "nll": 4.155422740291593,
+          "ece": 0.15875,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              18,
+              2
+            ],
+            [
+              4,
+              16
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 15,
+          "effectiveAccuracy": 0.375,
+          "validAccuracy": 0.375,
+          "effectiveAccuracy95Wilson": [
+            0.24222979167233266,
+            0.5296756086269889
+          ],
+          "macroF1": 0.3554092965857672,
+          "brier": 0.9656016833333501,
+          "nll": 4.020183674908088,
+          "ece": 0.4868333499999997,
+          "scoreMAE": 0.6480000250000001,
+          "confusion": [
+            [
+              6,
+              1,
+              1,
+              0,
+              0
+            ],
+            [
+              6,
+              1,
+              1,
+              0,
+              0
+            ],
+            [
+              2,
+              1,
+              3,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              2,
+              6
+            ],
+            [
+              0,
+              0,
+              0,
+              5,
+              3
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 120,
+        "retriedRequests": 0,
+        "additionalAttempts": 0,
+        "latencyP50Ms": 1750.0458755000436,
+        "latencyP95Ms": 2108.414303849893,
+        "latencyMeanMs": 1773.4719420416732,
+        "totalSeconds": 212.81663304500077,
+        "effectiveRequestsPerSecond": 0.5638657011109917,
+        "inputTokensMean": 3091.325,
+        "outputTokensMean": 27.708333333333332,
+        "firstAttemptInputTokensMean": 3091.325,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "qwen3.6-35b-a3b-ud-mlx-4bit",
+      "backgroundWords": 0,
+      "complete": true,
+      "macroTaskAccuracy": 0.7666666666666666,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 36,
+          "effectiveAccuracy": 0.9,
+          "validAccuracy": 0.9,
+          "effectiveAccuracy95Wilson": [
+            0.7694822477247771,
+            0.9604204713173936
+          ],
+          "macroF1": 0.9017050201260728,
+          "brier": 0.18292,
+          "nll": 0.39058901168171223,
+          "ece": 0.032499999999999814,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              9,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              9,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              8
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 34,
+          "effectiveAccuracy": 0.85,
+          "validAccuracy": 0.85,
+          "effectiveAccuracy95Wilson": [
+            0.709276756335103,
+            0.9293881228267964
+          ],
+          "macroF1": 0.849624060150376,
+          "brier": 0.156375,
+          "nll": 4.1645465116226585,
+          "ece": 0.15999999999999998,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              18,
+              2
+            ],
+            [
+              4,
+              16
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 22,
+          "effectiveAccuracy": 0.55,
+          "validAccuracy": 0.55,
+          "effectiveAccuracy95Wilson": [
+            0.39829091798932054,
+            0.6929469218909508
+          ],
+          "macroF1": 0.5367032967032968,
+          "brier": 0.6367844,
+          "nll": 1.1838663272528434,
+          "ece": 0.26325000000000004,
+          "scoreMAE": 0.5990250000000001,
+          "confusion": [
+            [
+              7,
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              3,
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              5,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              5,
+              3
+            ],
+            [
+              0,
+              0,
+              0,
+              6,
+              2
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 120,
+        "retriedRequests": 0,
+        "additionalAttempts": 0,
+        "latencyP50Ms": 888.9528954999987,
+        "latencyP95Ms": 1006.6232316000852,
+        "latencyMeanMs": 812.7816318833376,
+        "totalSeconds": 97.53379582600051,
+        "effectiveRequestsPerSecond": 1.2303427646154468,
+        "inputTokensMean": 337.0083333333333,
+        "outputTokensMean": 44.9,
+        "firstAttemptInputTokensMean": 337.0083333333333,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "qwen3.6-35b-a3b-ud-mlx-4bit",
+      "backgroundWords": 2048,
+      "complete": true,
+      "macroTaskAccuracy": 0.6916666666666668,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 35,
+          "effectiveAccuracy": 0.875,
+          "validAccuracy": 0.875,
+          "effectiveAccuracy95Wilson": [
+            0.738878801611489,
+            0.945404997490546
+          ],
+          "macroF1": 0.87653452685422,
+          "brier": 0.231215,
+          "nll": 1.716790413645145,
+          "ece": 0.04499999999999984,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              9,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              10,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              9,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              7
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 32,
+          "effectiveAccuracy": 0.8,
+          "validAccuracy": 0.8,
+          "effectiveAccuracy95Wilson": [
+            0.652426936536005,
+            0.895000102745623
+          ],
+          "macroF1": 0.7994987468671679,
+          "brier": 0.2125625,
+          "nll": 5.5621439145733955,
+          "ece": 0.22375000000000006,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              17,
+              3
+            ],
+            [
+              5,
+              15
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 16,
+          "effectiveAccuracy": 0.4,
+          "validAccuracy": 0.4,
+          "effectiveAccuracy95Wilson": [
+            0.2634832568429192,
+            0.5540410633965381
+          ],
+          "macroF1": 0.3066666666666667,
+          "brier": 0.7593679500000001,
+          "nll": 2.0232602504559765,
+          "ece": 0.26675000000000004,
+          "scoreMAE": 0.7639250000000001,
+          "confusion": [
+            [
+              6,
+              0,
+              0,
+              1,
+              1
+            ],
+            [
+              4,
+              0,
+              1,
+              3,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              5,
+              2
+            ],
+            [
+              0,
+              0,
+              0,
+              8,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              7,
+              1
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 120,
+        "retriedRequests": 0,
+        "additionalAttempts": 0,
+        "latencyP50Ms": 1499.2377500000293,
+        "latencyP95Ms": 1772.4665582999878,
+        "latencyMeanMs": 1502.4007294833418,
+        "totalSeconds": 180.288087538001,
+        "effectiveRequestsPerSecond": 0.6656013807607032,
+        "inputTokensMean": 3132.175,
+        "outputTokensMean": 43.06666666666667,
+        "firstAttemptInputTokensMean": 3132.175,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": []
+      }
+    },
+    {
+      "model": "diffusiongemma-26B-A4B-it-4bit",
+      "backgroundWords": 0,
+      "complete": true,
+      "macroTaskAccuracy": 0.7416666666666667,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 35,
+          "effectiveAccuracy": 0.875,
+          "validAccuracy": 0.875,
+          "effectiveAccuracy95Wilson": [
+            0.738878801611489,
+            0.945404997490546
+          ],
+          "macroF1": 0.8736312706900942,
+          "brier": 0.21862672335600902,
+          "nll": 0.4457435212716727,
+          "ece": 0.07141666666666686,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              10,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              8,
+              0
+            ],
+            [
+              0,
+              0,
+              3,
+              7
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 35,
+          "effectiveAccuracy": 0.875,
+          "validAccuracy": 0.875,
+          "effectiveAccuracy95Wilson": [
+            0.738878801611489,
+            0.945404997490546
+          ],
+          "macroF1": 0.8742928975487115,
+          "brier": 0.125,
+          "nll": 3.4538776394910684,
+          "ece": 0.125,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              16,
+              4
+            ],
+            [
+              1,
+              19
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 19,
+          "effectiveAccuracy": 0.475,
+          "validAccuracy": 0.475,
+          "effectiveAccuracy95Wilson": [
+            0.329354701126789,
+            0.6250263789330753
+          ],
+          "macroF1": 0.460370235050542,
+          "brier": 0.707821512956182,
+          "nll": 1.174781745534792,
+          "ece": 0.26913477377149475,
+          "scoreMAE": 0.6032982857109241,
+          "confusion": [
+            [
+              4,
+              3,
+              0,
+              0,
+              1
+            ],
+            [
+              2,
+              4,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              2,
+              4,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              7
+            ],
+            [
+              0,
+              0,
+              0,
+              2,
+              6
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 119,
+        "retriedRequests": 1,
+        "additionalAttempts": 1,
+        "latencyP50Ms": 1207.2880420000292,
+        "latencyP95Ms": 1896.8047375000199,
+        "latencyMeanMs": 1166.9586080249885,
+        "totalSeconds": 140.0350329629986,
+        "effectiveRequestsPerSecond": 0.8569284232732501,
+        "inputTokensMean": 542,
+        "outputTokensMean": 41.291666666666664,
+        "firstAttemptInputTokensMean": 536.775,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": [
+          "199 omlx \"response_format strict json_schema not enforced; grammar-constrained decoding unavailable, output is best-effort and NOT schema-enforced\""
+        ]
+      }
+    },
+    {
+      "model": "diffusiongemma-26B-A4B-it-4bit",
+      "backgroundWords": 2048,
+      "complete": true,
+      "macroTaskAccuracy": 0.65,
+      "tasks": {
+        "ag_news": {
+          "total": 40,
+          "valid": 40,
+          "correct": 33,
+          "effectiveAccuracy": 0.825,
+          "validAccuracy": 0.825,
+          "effectiveAccuracy95Wilson": [
+            0.6805000966821229,
+            0.9125458625396408
+          ],
+          "macroF1": 0.8158761528326745,
+          "brier": 0.2880268901897262,
+          "nll": 0.5770764378168363,
+          "ece": 0.10050884016973088,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              10,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              10,
+              0,
+              0
+            ],
+            [
+              2,
+              0,
+              8,
+              0
+            ],
+            [
+              1,
+              0,
+              4,
+              5
+            ]
+          ]
+        },
+        "boolq": {
+          "total": 40,
+          "valid": 40,
+          "correct": 35,
+          "effectiveAccuracy": 0.875,
+          "validAccuracy": 0.875,
+          "effectiveAccuracy95Wilson": [
+            0.738878801611489,
+            0.945404997490546
+          ],
+          "macroF1": 0.8749218261413383,
+          "brier": 0.12525,
+          "nll": 3.456511652382514,
+          "ece": 0.12249999999999997,
+          "scoreMAE": null,
+          "confusion": [
+            [
+              17,
+              3
+            ],
+            [
+              2,
+              18
+            ]
+          ]
+        },
+        "sst5": {
+          "total": 40,
+          "valid": 40,
+          "correct": 10,
+          "effectiveAccuracy": 0.25,
+          "validAccuracy": 0.25,
+          "effectiveAccuracy95Wilson": [
+            0.14187118639096302,
+            0.40193961420768026
+          ],
+          "macroF1": 0.23242378536496183,
+          "brier": 1.1289553246609048,
+          "nll": 4.403305687700706,
+          "ece": 0.5896701602491076,
+          "scoreMAE": 0.937238285106706,
+          "confusion": [
+            [
+              4,
+              1,
+              0,
+              0,
+              3
+            ],
+            [
+              4,
+              0,
+              3,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              2,
+              4,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              7
+            ],
+            [
+              0,
+              0,
+              0,
+              5,
+              3
+            ]
+          ]
+        }
+      },
+      "timing": {
+        "requests": 120,
+        "failures": 0,
+        "firstPassValid": 115,
+        "retriedRequests": 5,
+        "additionalAttempts": 5,
+        "latencyP50Ms": 2049.551604499924,
+        "latencyP95Ms": 3138.9183877999776,
+        "latencyMeanMs": 2131.3710874916674,
+        "totalSeconds": 255.7645304990001,
+        "effectiveRequestsPerSecond": 0.46918155447856025,
+        "inputTokensMean": 3432.725,
+        "outputTokensMean": 49.325,
+        "firstAttemptInputTokensMean": 3292.325,
+        "reportedCachedFraction": 0,
+        "lengthLimitedAttempts": 0,
+        "reasoningAttempts": 0,
+        "warnings": [
+          "199 omlx \"response_format strict json_schema not enforced; grammar-constrained decoding unavailable, output is best-effort and NOT schema-enforced\""
+        ]
+      }
+    }
+  ],
+  "paired": [
+    {
+      "model": "gemma-4-E2B-it-UD-MLX-4bit",
+      "comparisons": [
+        {
+          "backgroundWords": 2048,
+          "bothValid": 117,
+          "predictionsChanged": 48,
+          "correctToWrong": 21,
+          "wrongToCorrect": 17
+        }
+      ]
+    },
+    {
+      "model": "gemma-4-E4B-it-UD-MLX-4bit",
+      "comparisons": [
+        {
+          "backgroundWords": 2048,
+          "bothValid": 120,
+          "predictionsChanged": 47,
+          "correctToWrong": 25,
+          "wrongToCorrect": 9
+        }
+      ]
+    },
+    {
+      "model": "gemma-4-26b-a4b-it-UD-MLX-4bit",
+      "comparisons": [
+        {
+          "backgroundWords": 2048,
+          "bothValid": 120,
+          "predictionsChanged": 17,
+          "correctToWrong": 12,
+          "wrongToCorrect": 5
+        }
+      ]
+    },
+    {
+      "model": "qwen3.6-35b-a3b-ud-mlx-4bit",
+      "comparisons": [
+        {
+          "backgroundWords": 2048,
+          "bothValid": 120,
+          "predictionsChanged": 20,
+          "correctToWrong": 13,
+          "wrongToCorrect": 4
+        }
+      ]
+    },
+    {
+      "model": "diffusiongemma-26B-A4B-it-4bit",
+      "comparisons": [
+        {
+          "backgroundWords": 2048,
+          "bothValid": 120,
+          "predictionsChanged": 23,
+          "correctToWrong": 16,
+          "wrongToCorrect": 5
+        }
+      ]
+    }
+  ]
+}

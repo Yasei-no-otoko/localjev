@@ -160,6 +160,33 @@ bun run typecheck
 bun run smoke       # live call to the configured inference server
 ```
 
+## Evaluate different models
+
+The repeatable bake-off uses public gold labels for news categorization (AG News),
+yes/no reading comprehension (BoolQ), and five-level sentiment (SST-5). It runs the
+same LocalJev engine against five installed models, comparing quality, calibration,
+retries, and full-decision latency at two actual input lengths.
+
+```sh
+# Quick integration check (30 requests, not a meaningful quality sample)
+bun run eval --out eval/runs/pilot --limit 3
+
+# 5 models × 120 labeled examples × 2 input lengths = 1,200 requests
+bun run eval --out eval/runs/my-bakeoff
+
+# Regenerate a completed or partial report without running inference
+bun run eval:report eval/runs/my-bakeoff
+```
+
+Requires oMLX and the upstream key in `.env`; no running LocalJev HTTP server or
+Python is needed. See [the evaluation guide](docs/evaluation.md) for pinned data
+sources, methodology, configuration, resuming runs, and limitations.
+
+The [first completed bake-off](docs/evaluation-results-2026-09-18.md) includes
+1,200 requests on an M5 Max. Gemma 4 26B-A4B and Qwen3.6 were the strongest overall
+candidates in this small screening sample; the report includes per-task results,
+latency, context effects, and caveats rather than claiming a definitive winner.
+
 ## Should you use LM Studio instead?
 
 Not currently for this model. As of September 18, 2026, DiffusionGemma support is

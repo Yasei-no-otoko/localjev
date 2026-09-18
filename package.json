@@ -9,10 +9,14 @@
     "dev": "bun --watch run src/index.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
-    "smoke": "bun run scripts/live-smoke.ts"
+    "smoke": "bun run scripts/live-smoke.ts",
+    "eval": "bun run scripts/eval/run.ts",
+    "eval:report": "bun run scripts/eval/report.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "hyparquet": "^1.31.1",
+    "hyparquet-compressors": "^1.1.2",
     "typescript": "^5.9.0"
   }
 }

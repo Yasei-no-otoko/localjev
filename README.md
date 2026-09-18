@@ -37,12 +37,24 @@ them for consequential decisions.
 
 Requires Bun 1.2+ and a running oMLX server.
 
-```bash
-cd /Users/idan/src/localjev
+```sh
 bun install
-
-export LOCALJEV_UPSTREAM_API_KEY='your-local-omlx-key'
+cp .env.example .env
+$EDITOR .env # replace the upstream API-key placeholder
 bun run start
+```
+
+Bun loads `.env` automatically. Alternatively, set the key in your shell before
+starting the server:
+
+```fish
+# fish
+set -gx LOCALJEV_UPSTREAM_API_KEY 'your-local-omlx-key'
+```
+
+```sh
+# bash/zsh
+export LOCALJEV_UPSTREAM_API_KEY='your-local-omlx-key'
 ```
 
 LocalJev listens on `http://127.0.0.1:8080`. Check that the configured model is
@@ -85,9 +97,18 @@ curl http://127.0.0.1:8080/v1/systemone \
 
 ## Use the TypeSafe SDK
 
-```bash
+The SDK requires an API-key value. LocalJev accepts any value unless
+`LOCALJEV_API_KEY` is configured. Set the SDK environment for your shell:
+
+```fish
+# fish
+set -gx TYPESAFE_BASE_URL http://127.0.0.1:8080
+set -gx TYPESAFE_API_KEY local
+```
+
+```sh
+# bash/zsh
 export TYPESAFE_BASE_URL=http://127.0.0.1:8080
-# The SDK requires a value. LocalJev accepts it unless LOCALJEV_API_KEY is set.
 export TYPESAFE_API_KEY=local
 ```
 

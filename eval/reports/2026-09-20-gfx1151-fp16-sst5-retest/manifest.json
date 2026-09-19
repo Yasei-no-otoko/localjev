@@ -1,0 +1,68 @@
+{
+  "runId": "2026-09-20-gfx1151-fp16-sst5-retest",
+  "scope": "Retest of ALL failed requests from one completed source run. Selected failures only; this is not an overall accuracy estimate or a replacement for the source benchmark.",
+  "startedAt": "2026-09-19T18:55:29.014Z",
+  "sourceRunId": "2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-standard",
+  "sourceHashes": {
+    "manifest.json": "0de5afd889fb5120e9f0e78c81387e90f47ded75a4f7adff46b927495a6ff0f9",
+    "results.jsonl": "b591fc7adf576bba754426016b008b633b38f97d8e713e37af4780ac289089da",
+    "summary.json": "aad1fbd3f902b00619dffce88a10e4975a9113eaa1977e66e333cd72537f488e"
+  },
+  "sourceModel": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX",
+  "targetModel": ".runtime/models/diffusiongemma-26B-A4B-it",
+  "nonce": "2a925e77-06e0-4de5-82ce-e48740a1f200",
+  "sourceConfig": {
+    "seed": 20260918,
+    "samplesPerTask": 40,
+    "models": [
+      "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX"
+    ],
+    "backgroundWords": [
+      0,
+      2048
+    ],
+    "temperature": 0,
+    "maxOutputTokens": 256,
+    "malformedRetries": 2,
+    "timeoutSeconds": 90,
+    "warmupRequests": 2,
+    "cacheMode": "bust-prefix"
+  },
+  "config": {
+    "seed": 20260918,
+    "samplesPerTask": 40,
+    "models": [
+      ".runtime/models/diffusiongemma-26B-A4B-it"
+    ],
+    "backgroundWords": [
+      0,
+      2048
+    ],
+    "temperature": 0,
+    "maxOutputTokens": 256,
+    "malformedRetries": 2,
+    "timeoutSeconds": 90,
+    "warmupRequests": 2,
+    "cacheMode": "bust-prefix"
+  },
+  "suiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859",
+  "codeHashes": {
+    "src/engine.ts": "761095ee4addd176cec1ca657dd438e107229dd83b9c063a5b0c56cc6dc0381d",
+    "src/types.ts": "2c53ab73368b884f0e08d78dfd9eebdb67aba78d5287be9b1253f82d2893b044",
+    "src/config.ts": "66b37cd1c34557c999939bc0ea54cb8f80bebf1b6ab2bcbb95868ae8b6ee4f55",
+    "bun.lock": "7348addb921966e73d46c2133343fd0169c65a8d3bb15b5240cb0ae644c5cd60",
+    "scripts/eval/common.ts": "c87b7420a99110e8cd82fe8bc32d1b1d5ff6eed4c88edd69203a14a45e4dfa41",
+    "scripts/eval/data.ts": "d2af318f435c749c13630b076356d864b63344fcd56529568db7935789d3e9ab",
+    "scripts/eval/run.ts": "495b3701517c4a3c46f5e49753f0d920ad7707f84ff9cbce40543825cbaf219c"
+  },
+  "retestCodeHash": "f77fdc74f3371aafec8290e46d828ab2b7aa4e2c3cbf61ac9c547e8a4a3497c2",
+  "selectedSourceKeys": [
+    "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX|2048|sst5:test:89",
+    "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX|2048|sst5:test:173",
+    "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX|2048|sst5:test:1831"
+  ],
+  "expectedResults": 3,
+  "completedResults": 3,
+  "finishedAt": "2026-09-19T18:57:34.871Z",
+  "runtimeProvenance": "runtime.json"
+}

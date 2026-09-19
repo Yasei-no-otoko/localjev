@@ -1,0 +1,9 @@
+{
+  "scope": "Retest of ALL failed requests from one completed source run. Selected failures only; this is not an overall accuracy estimate or a replacement for the source benchmark.",
+  "complete": true,
+  "measured": 3,
+  "selected": 3,
+  "validDistributions": 3,
+  "goldCorrectAmongValid": 1,
+  "excludedWarmups": 2
+}

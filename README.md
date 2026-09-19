@@ -6,10 +6,11 @@ Chat Completions endpoint.
 
 This fork adds **Windows / AMD Radeon 8060S (gfx1151) ROCm backends** for
 DiffusionGemma: the original checkpoint through PyTorch and
-`Q8_0_ROCMFPX_AGENT.gguf` through ROCmFPX. Start with
+`Q8_0_ROCMFPX.gguf` / `Q8_0_ROCMFPX_AGENT.gguf` through ROCmFPX. Start with
 [the GFX1151 guide](docs/gfx1151.md) for setup and evaluation commands.
-The [240-request Q8 bake-off](eval/reports/2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx/report.md)
-uses the same examples and settings as the September 18 reference run.
+Both Q8 variants completed 240-request evaluations using the September 18
+reference examples and settings. See the [standard vs AGENT comparison](eval/reports/2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-standard/comparison.md)
+for accuracy, latency and output-validation failures.
 
 The original oMLX defaults target:
 

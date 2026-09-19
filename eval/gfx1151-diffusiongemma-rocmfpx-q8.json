@@ -1,0 +1,12 @@
+{
+  "seed": 20260918,
+  "samplesPerTask": 40,
+  "models": ["diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT"],
+  "backgroundWords": [0, 2048],
+  "temperature": 0,
+  "maxOutputTokens": 256,
+  "malformedRetries": 2,
+  "timeoutSeconds": 90,
+  "warmupRequests": 2,
+  "cacheMode": "bust-prefix"
+}

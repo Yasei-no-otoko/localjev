@@ -1,0 +1,125 @@
+{
+  "recordedAt": "2026-09-19T15:28:56.4842719Z",
+  "backend": {
+    "status": "ok",
+    "model": ".runtime/models/diffusiongemma-26B-A4B-it",
+    "runtime": {
+      "device": "cuda:0",
+      "gpu": "AMD Radeon(TM) 8060S Graphics",
+      "architecture": "gfx1151",
+      "hip": "7.16.26362",
+      "torch": "2.15.0a0+rocm10.1.0a20260909",
+      "transformers": "5.11.0",
+      "dtype": "float16",
+      "attention": "sdpa",
+      "experts": "eager",
+      "model_type": "diffusion_gemma"
+    },
+    "structured_output": "prompt_only",
+    "cache": "dynamic"
+  },
+  "model": {
+    "source": "google/diffusiongemma-26B-A4B-it",
+    "weightBytes": 51647701024,
+    "revision": "f7f5b7f5fa82ffc52addd066915886d497f5517b",
+    "quantization": "none; source BF16 weights loaded as FP16",
+    "generationConfig": {
+      "confidence_threshold": 0.005,
+      "eos_token_id": [
+        1,
+        106,
+        50
+      ],
+      "max_denoising_steps": 48,
+      "max_new_tokens": 256,
+      "pad_token_id": 0,
+      "sampler_config": {
+        "_cls_name": "EntropyBoundSamplerConfig",
+        "entropy_bound": 0.1
+      },
+      "stability_threshold": 1,
+      "t_max": 0.8,
+      "t_min": 0.4,
+      "transformers_version": "5.8.0.dev0"
+    }
+  },
+  "machine": {
+    "version": "10.0.26200",
+    "cpu": "AMD RYZEN AI MAX+ 395 w/ Radeon 8060S",
+    "os": "Microsoft Windows 11 Pro",
+    "logicalProcessors": 32,
+    "visibleMemoryGiB": 119.647,
+    "cores": 16
+  },
+  "backendCodeHashes": {
+    "scripts/rocm_server.py": "7c9cad9a3103723b3c9086785385450876bd137a3e36bea56267680465ef7aaa",
+    "requirements-rocm.txt": "0a1f3ff38641c45254407d6972dd5e73ab36507dac3e8e9c3187cf61e1e42e75"
+  },
+  "referenceRun": "2026-09-18-bakeoff",
+  "comparability": {
+    "measuredRequests": 41,
+    "excludedWarmups": 4,
+    "samplingNote": "Request temperature is 0; native DiffusionGemma uses original t_min=0.4, t_max=0.8 diffusion schedule. JSON schema is prompted.",
+    "environmentDifference": "Windows ROCm FP16 vs macOS oMLX MLX 4-bit",
+    "matchingStateHashes": 240,
+    "settingsDifference": "model ID only",
+    "modelCount": 1,
+    "suiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859",
+    "normalizedCodeMatches": {
+      "src/engine.ts": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "src/types.ts": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "src/config.ts": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "bun.lock": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "scripts/eval/common.ts": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "scripts/eval/data.ts": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "scripts/eval/run.ts": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "scripts/eval/metrics.ts": "09095558d28eda30e9a1e6aafc9be191ca6680a676991ae0132b8d08024eb914"
+    },
+    "codeNormalization": "CRLF converted to LF for Windows checkout comparison; inference, sampling and metric code otherwise identical.",
+    "reportPresentationChange": "Runtime label accepts backendName; metric calculations are unchanged.",
+    "expectedRequests": 240,
+    "warmupsPerExecutionSegment": 2
+  },
+  "manifestEnvironmentNote": "Actual Windows hardware and backend fields were copied into manifest.environment during partial-run finalization. originalManifestEnvironment here and originalGeneratedEnvironment in manifest.json preserve the original macOS-only probes.",
+  "originalManifestEnvironment": {
+    "bun": "1.4.2",
+    "cpu": null,
+    "memoryGiB": 0,
+    "os": null,
+    "architecture": "x64",
+    "power": "unknown/battery"
+  },
+  "executionSegments": [
+    {
+      "startedAt": "2026-09-19T15:28:57.340Z",
+      "recordedResults": 38,
+      "endReason": "Execution tool session aborted; writer and backend no longer running"
+    },
+    {
+      "resumePreparedAt": "2026-09-19T15:54:39.593Z",
+      "resumeFromResults": 38,
+      "backendRestarted": true,
+      "warmupsPerSegment": 2,
+      "recordedResults": 3,
+      "totalRecordedResults": 41,
+      "endReason": "Stopped at the user's request to switch to Q8 because FP16 placed too much load on the PC.",
+      "finalizedAt": "2026-09-19T16:35:30.083Z"
+    }
+  ],
+  "status": "partial",
+  "completedResults": 41,
+  "expectedResults": 240,
+  "finalizedAt": "2026-09-19T16:35:30.083Z",
+  "stopReason": "Stopped at the user's request to switch to Q8 because FP16 placed too much load on the PC.",
+  "recovery": {
+    "originalPath": ".runtime/fp16-interrupted-results.original.jsonl",
+    "originalBytes": 40479,
+    "originalSHA256": "5859f3644eb759f38e8239801b3d45fdd9f25a7dc0accf6f8ce937b8495aec99",
+    "retainedBytes": 39430,
+    "retainedSHA256": "5996c85316661506548634f10067d198d90ddb8d3fa973f651dbddbe68d46f67",
+    "removedTrailingNULBytes": 1049,
+    "validatedRows": 41,
+    "duplicateKeys": 0,
+    "method": "Only the verified trailing NUL suffix was removed; every retained byte is unchanged."
+  }
+}

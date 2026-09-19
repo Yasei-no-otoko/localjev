@@ -1,0 +1,137 @@
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -41,6 +41,51 @@
+ using json = nlohmann::ordered_json;
+ 
+ constexpr int HTTP_POLLING_SECONDS = 1;
++
++// Diffusion decoding does not use the autoregressive grammar sampler.
++// Keep the schema visible in the prompt instead of silently discarding it.
++static void diffusion_prompt_response_format(json & body) {
++    if (!body.contains("response_format") || body.at("response_format").is_null()) {
++        return;
++    }
++    const auto & format = body.at("response_format");
++    if (!format.is_object()) {
++        throw std::invalid_argument("response_format must be an object");
++    }
++    const std::string type = json_value(format, "type", std::string());
++    std::string instruction;
++    if (type == "json_schema") {
++        if (!format.contains("json_schema") || !format.at("json_schema").is_object() ||
++                !format.at("json_schema").contains("schema") ||
++                !format.at("json_schema").at("schema").is_object()) {
++            throw std::invalid_argument("response_format.json_schema.schema must be an object");
++        }
++        instruction = "Return only JSON matching this schema, with no explanation or markdown:\n" +
++                format.at("json_schema").at("schema").dump();
++    } else if (type == "json_object") {
++        instruction = "Return only a JSON object, with no explanation or markdown.";
++    } else if (type != "text") {
++        throw std::invalid_argument("response_format.type must be text, json_object, or json_schema");
++    }
++    if (!instruction.empty()) {
++        if (!body.contains("messages") || !body.at("messages").is_array() || body.at("messages").empty()) {
++            throw std::invalid_argument("messages must be a nonempty array");
++        }
++        auto & messages = body.at("messages");
++        if (json_value(messages.front(), "role", std::string()) == "system") {
++            if (!messages.front().contains("content") || !messages.front().at("content").is_string()) {
++                throw std::invalid_argument("the system message must contain text for diffusion response_format");
++            }
++            messages.front()["content"] = messages.front().at("content").get<std::string>() + "\n\n" + instruction;
++        } else {
++            messages.insert(messages.begin(), json{{"role", "system"}, {"content", instruction}});
++        }
++        SRV_INF("%s\n", "diffusion structured_output=prompt_only; JSON schema is not enforced by decoding");
++    }
++    // Do not build a schema parser: malformed model JSON must reach the client
++    // for validation, and must not be replaced by an HTTP parser error.
++    body.erase("response_format");
++}
+ 
+ // state diagram: https://github.com/ggml-org/llama.cpp/pull/9283
+ enum slot_state {
+@@ -3767,6 +3812,15 @@
+         const std::string formatted_prompt = prompt_json.get<std::string>();
+         const int32_t n_predict = json_value(data, "n_predict", json_value(data, "max_tokens", params_base.n_predict));
+ 
++        uint32_t request_seed = params_base.sampling.seed;
++        if (data.contains("seed") && !data.at("seed").is_null()) {
++            const auto & seed = data.at("seed");
++            if (!seed.is_number_integer() || seed < 0 || seed > UINT32_MAX) {
++                throw std::invalid_argument("seed must be an integer from 0 to 4294967295");
++            }
++            request_seed = seed.get<uint32_t>();
++        }
++
+         char canvas_str[32];
+         int64_t canvas_length = 0;
+         if (llama_model_meta_val_str(model_tgt, "diffusion.canvas_length", canvas_str, sizeof(canvas_str)) >= 0) {
+@@ -3800,7 +3854,7 @@
+         diff_params.schedule            = DIFFUSION_TRANSFER_SCHEDULE_TIMESTEP_BASED;
+         diff_params.eps                 = params_base.diffusion.eps > 0 ? params_base.diffusion.eps : 1e-3f;
+         diff_params.mask_token_id       = mask_token_id;
+-        diff_params.seed                = params_base.sampling.seed;
++        diff_params.seed                = request_seed;
+         diff_params.temperature         = json_value(data, "temperature", params_base.sampling.temp);
+         diff_params.steps               = params_base.diffusion.steps;
+         diff_params.algorithm           = static_cast<diffusion_algorithm>(params_base.diffusion.algorithm);
+@@ -3823,7 +3877,7 @@
+         if (params_base.diffusion.eb_stability     >= 0) { eb_params.stability_threshold  = params_base.diffusion.eb_stability; }
+         if (params_base.diffusion.eb_confidence    >= 0) { eb_params.confidence_threshold = params_base.diffusion.eb_confidence; }
+         if (params_base.diffusion.eb_max_steps     >  0) { eb_params.max_denoising_steps  = params_base.diffusion.eb_max_steps; }
+-        eb_params.seed     = params_base.sampling.seed;
++        eb_params.seed     = request_seed;
+         eb_params.kv_cache = params_base.diffusion.eb_kv_cache != 2;
+ 
+         const bool use_eb = params_base.diffusion.eb_mode != 2;
+@@ -3919,7 +3973,19 @@
+             hit_token_limit = true;
+         }
+ 
+-        const std::string content = common_detokenize(vocab, response_tokens, false);
++        std::string content = common_detokenize(vocab, response_tokens, false);
++        if (res_type == TASK_RESPONSE_TYPE_OAI_CHAT && data.contains("chat_parser")) {
++            // Preserve channel tokens until the existing chat parser has separated
++            // reasoning from final content. This does not parse or repair JSON.
++            common_chat_parser_params parser_params;
++            parser_params.format = static_cast<common_chat_format>(data.at("chat_format").get<int>());
++            parser_params.reasoning_format = params_base.reasoning_format;
++            parser_params.generation_prompt = json_value(data, "generation_prompt", std::string());
++            parser_params.parse_tool_calls = false;
++            parser_params.parser.load(data.at("chat_parser").get<std::string>());
++            content = common_chat_parse(common_detokenize(vocab, response_tokens, true),
++                    hit_token_limit || hit_context_limit, parser_params).content;
++        }
+         const int32_t n_prompt_tokens = (int32_t) common_tokenize(vocab, formatted_prompt, true, true).size();
+         const char * finish_reason = (hit_token_limit || hit_context_limit) ? "length" : "stop";
+         json usage = {
+@@ -3931,6 +3997,7 @@
+ 
+         if (res_type == TASK_RESPONSE_TYPE_OAI_CHAT) {
+             return {
++                {"structured_output", "prompt_only"},
+                 {"choices", json::array({
+                     {
+                         {"finish_reason", finish_reason},
+@@ -4694,6 +4761,9 @@
+         auto res = create_response();
+         std::vector<raw_buffer> files;
+         json body = json::parse(req.body);
++        if (llama_model_is_diffusion(ctx_server.model_tgt)) {
++            diffusion_prompt_response_format(body);
++        }
+         json body_parsed = oaicompat_chat_params_parse(
+             body,
+             meta->chat_params,
+@@ -4792,6 +4862,9 @@
+         auto res = create_response();
+         std::vector<raw_buffer> files; // dummy, unused
+         json body = json::parse(req.body);
++        if (llama_model_is_diffusion(ctx_server.model_tgt)) {
++            diffusion_prompt_response_format(body);
++        }
+         json data = oaicompat_chat_params_parse(
+             body,
+             meta->chat_params,

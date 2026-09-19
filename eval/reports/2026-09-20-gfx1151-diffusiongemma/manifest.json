@@ -1,0 +1,1650 @@
+{
+  "runId": "2026-09-20-gfx1151-diffusiongemma",
+  "startedAt": "2026-09-19T15:28:57.340Z",
+  "nonce": "5eb15b29-2b24-4d11-b524-2484a08c9bf2",
+  "config": {
+    "seed": 20260918,
+    "samplesPerTask": 40,
+    "models": [
+      ".runtime/models/diffusiongemma-26B-A4B-it"
+    ],
+    "backgroundWords": [
+      0,
+      2048
+    ],
+    "temperature": 0,
+    "maxOutputTokens": 256,
+    "malformedRetries": 2,
+    "timeoutSeconds": 90,
+    "warmupRequests": 2,
+    "cacheMode": "bust-prefix"
+  },
+  "suiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859",
+  "sources": [
+    {
+      "name": "ag_news-test",
+      "dataset": "fancyzhx/ag_news",
+      "split": "test",
+      "revision": "eb185aade064a813bc0b7f42de02595523103ca4",
+      "url": "https://huggingface.co/datasets/fancyzhx/ag_news/resolve/eb185aade064a813bc0b7f42de02595523103ca4/data/test-00000-of-00001.parquet",
+      "sha256": "71de87ec66bc5737752a2502204dfa6d7fe9856ade3ea444dc6317789a4f13fb",
+      "format": "parquet"
+    },
+    {
+      "name": "boolq-validation",
+      "dataset": "google/boolq",
+      "split": "validation",
+      "revision": "35b264d03638db9f4ce671b711558bf7ff0f80d5",
+      "url": "https://huggingface.co/datasets/google/boolq/resolve/35b264d03638db9f4ce671b711558bf7ff0f80d5/data/validation-00000-of-00001.parquet",
+      "sha256": "52355d11524b4b874a9b9dcc278feb10f672d52c4f4eff9872e695ede59820f8",
+      "format": "parquet"
+    },
+    {
+      "name": "sst5-test",
+      "dataset": "SetFit/sst5",
+      "split": "test",
+      "revision": "e51bdcd8cd3a30da231967c1a249ba59361279a3",
+      "url": "https://huggingface.co/datasets/SetFit/sst5/resolve/e51bdcd8cd3a30da231967c1a249ba59361279a3/test.jsonl",
+      "sha256": "1384216112a34f3d70b6fa210762f3399bb080410c0456ac6e54a5cb413f04b2",
+      "format": "jsonl"
+    },
+    {
+      "name": "boolq-background",
+      "dataset": "google/boolq",
+      "split": "train (passages only; no labels/questions)",
+      "revision": "35b264d03638db9f4ce671b711558bf7ff0f80d5",
+      "url": "https://huggingface.co/datasets/google/boolq/resolve/35b264d03638db9f4ce671b711558bf7ff0f80d5/data/train-00000-of-00001.parquet",
+      "sha256": "4f028e992c0bd4df30b9f056f4946b64f5c23028034ff0ed5ea467d8538cc623",
+      "format": "parquet"
+    }
+  ],
+  "examples": [
+    {
+      "id": "ag_news:test:692",
+      "row": 692,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "3d627b43648ac7ba9bde88ee9fb8d55c234fc63ec8f7ab8551f37e821ba4d79c"
+    },
+    {
+      "id": "boolq:validation:1454",
+      "row": 1454,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "baf448c69f527f8c5efbb68c3fa3db94f5706e15c0c99ebd91aad2471385c184"
+    },
+    {
+      "id": "sst5:test:210",
+      "row": 210,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "9115e6489881e98e6150e500d051c566583fb0d120a36dab73a22bc5ba138bd4"
+    },
+    {
+      "id": "ag_news:test:5198",
+      "row": 5198,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "59dea149557e998a39f6701685bd65280615857a837c9974cb811f2cffa69aa9"
+    },
+    {
+      "id": "boolq:validation:144",
+      "row": 144,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "21a635a6b4e60d0c65eebd1c90fa6273bc312517ba2cedda0e4a763ae8982535"
+    },
+    {
+      "id": "sst5:test:573",
+      "row": 573,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "7067ece2159665a441e38860754ef68798cfd7a40842af60fb90b4c115d12868"
+    },
+    {
+      "id": "ag_news:test:4750",
+      "row": 4750,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "4db315e5ff7fe51af0dab3dd524981734f9cb1b82fd7fc9b873e80b8d0dfd37e"
+    },
+    {
+      "id": "boolq:validation:2908",
+      "row": 2908,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "d60c55feaca0a9c8ba154f53fb77d5a8e0f7f70772f7fdcf7f90405f9c80fae8"
+    },
+    {
+      "id": "sst5:test:629",
+      "row": 629,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "d33f0477a3d98d5a9c91406a2aa6086fcd3a619ac0d4bc730eeb45d5c6abf626"
+    },
+    {
+      "id": "ag_news:test:4435",
+      "row": 4435,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "740251a0f488b435e29045810d5c26f0f8fec5fd9da4c1f5a66b757b71b29252"
+    },
+    {
+      "id": "boolq:validation:2013",
+      "row": 2013,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "29c5c8d6a46781d8a9ce3b365a1e36d497df5059feae3be468005774208218c6"
+    },
+    {
+      "id": "sst5:test:1147",
+      "row": 1147,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "6f6dc12e1c859d233a79dde011ae8c9fdc486fbbf60c7f7eafaf4f0f939dc7be"
+    },
+    {
+      "id": "ag_news:test:2871",
+      "row": 2871,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "2e9f05f25dd31cee68f5addd6ef6a20f9f7a972a3f3dee0d55097d1abecb3436"
+    },
+    {
+      "id": "boolq:validation:3036",
+      "row": 3036,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "3bfbb1396bc9702c55e734b1e410f190d33393d1f17dd6ade9d6833c0331abb1"
+    },
+    {
+      "id": "sst5:test:649",
+      "row": 649,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "dfc9c9db66d65ab3d3b2d279bf1d402b984a7e16a9e7fdca0a1f898b804c95f4"
+    },
+    {
+      "id": "ag_news:test:1561",
+      "row": 1561,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "b0ec60104e9969477d822e71ac29c3a37c3ad5c7c3f3dc070cb652e60fe3bb2f"
+    },
+    {
+      "id": "boolq:validation:1849",
+      "row": 1849,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "993f939c230421ce65c6c6c87a8cd9dd118d097b7448597da39ec5ec8a1f2406"
+    },
+    {
+      "id": "sst5:test:1724",
+      "row": 1724,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "a9fc2d4becd4d972d74f3a016057fa8a761cab39ea0c10262c0c1eeb1c191823"
+    },
+    {
+      "id": "ag_news:test:7375",
+      "row": 7375,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "70971782ed59f8650cd314984e064daccc8ad1ad9875303cbd71d3f9cf39b3fc"
+    },
+    {
+      "id": "boolq:validation:987",
+      "row": 987,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "99483a65b6a9552fa6a123a6fa8f1fbec1a099b2408e11b9d3bc587eef29af67"
+    },
+    {
+      "id": "sst5:test:746",
+      "row": 746,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "43e1dcdd06ee5c9ace794019e6dda7685bcf8cf8a0d06e6c39b69111fe6bcca4"
+    },
+    {
+      "id": "ag_news:test:7462",
+      "row": 7462,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "03eec2692868c7ac4503a9e9087882c5a22d91b82d32237243d45e951efd7eb1"
+    },
+    {
+      "id": "boolq:validation:3079",
+      "row": 3079,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "0daa6051d241bdb66a426fa08677158e7d262019dc773d3294df7cdd36d0dc59"
+    },
+    {
+      "id": "sst5:test:549",
+      "row": 549,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "6be6bb5b431495023847754001f8fdbba4ddd36687dabb68215e96d3790d78d8"
+    },
+    {
+      "id": "ag_news:test:3528",
+      "row": 3528,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "fb25ab9bd1abdaffb10b0ad49a338cb0c2b0bb02576349cb1f2fae0e4d1aa21b"
+    },
+    {
+      "id": "boolq:validation:3148",
+      "row": 3148,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "3761b7a0644a8ea2d514cf15b5becb3c7993e57a51945880832561212f8a821e"
+    },
+    {
+      "id": "sst5:test:89",
+      "row": 89,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "dd81280b9b3acb458e1fa2ff84f49358507a24bccbea47f28ea479f7aece7ee2"
+    },
+    {
+      "id": "ag_news:test:6394",
+      "row": 6394,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "29ed3905730495ef32768c3d60d417519dcabb6b301805287323b6dfafbea685"
+    },
+    {
+      "id": "boolq:validation:672",
+      "row": 672,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "592d63342b9c8c9c88b14b5a91f2e28b6d50c4b45019f88ca7c8b1fa65fcaec6"
+    },
+    {
+      "id": "sst5:test:1817",
+      "row": 1817,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "cc500376160400424b2a5900081dd95a8b6f0b16cff2236d2e8254b7cba0ab73"
+    },
+    {
+      "id": "ag_news:test:4896",
+      "row": 4896,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "34f0749cbfcd530ba3db9855cca0ad97f9fc479a48bdca73f62dbdfcb90ae731"
+    },
+    {
+      "id": "boolq:validation:2607",
+      "row": 2607,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "cf3068f28b2ddca976c2433ccaf9a208f5034f5a8ded1e3f62b4dc70fed5cd11"
+    },
+    {
+      "id": "sst5:test:1679",
+      "row": 1679,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "344c43a68808845c5a82df6f63fe65bfd21b0f318bf3d5f089bc3e8a75ce33dc"
+    },
+    {
+      "id": "ag_news:test:6959",
+      "row": 6959,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "c1fe52dad61015c699f83b4c1cedf6d5b89016354fd80e9b55ffd5a2577d3cf6"
+    },
+    {
+      "id": "boolq:validation:1135",
+      "row": 1135,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "cf8d37b0b99de2df34d96c90c8a61b05596d6e7f1f48480609c04e96633f7f8b"
+    },
+    {
+      "id": "sst5:test:763",
+      "row": 763,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "68182ed110d44b72385fd717fd4a456c825d63f4529536df0fbfb1954f7c54b7"
+    },
+    {
+      "id": "ag_news:test:7035",
+      "row": 7035,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "f686c75a9ecdf7e86659d670df4589de8a43576c335c12f849d044314992a18b"
+    },
+    {
+      "id": "boolq:validation:3239",
+      "row": 3239,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "289bef8ec86d01a9de42a8c4669ed79e965dfa10973d42750ba711a410e87602"
+    },
+    {
+      "id": "sst5:test:513",
+      "row": 513,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "28f8bb005b7d38ba0f2559fca6ae24a3c0125d3c2f8db5c237042f275ce48eb8"
+    },
+    {
+      "id": "ag_news:test:5402",
+      "row": 5402,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "e1e95f9759c796ebd91990124e5b57b5b47ab92d44a982104d3fa45cd3130fc8"
+    },
+    {
+      "id": "boolq:validation:708",
+      "row": 708,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "41c80582b4683a9a0e4e3e83dd40a49ca4bc1b81563d724072aa510f94ca35c2"
+    },
+    {
+      "id": "sst5:test:807",
+      "row": 807,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "bb3cf2b29fc0aaeeb36e49eada4b66aeeb55fc952f7dc3dc365546601ad874f2"
+    },
+    {
+      "id": "ag_news:test:3915",
+      "row": 3915,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "5c2b741c1b8195367e8786512e124f2f3e7d979f94ed8ba66d3cb56dfb6bfa58"
+    },
+    {
+      "id": "boolq:validation:1017",
+      "row": 1017,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "2dead02719cf845f7e62b0d4b9a0042e60c4aa438bcb337670371075876410f7"
+    },
+    {
+      "id": "sst5:test:1743",
+      "row": 1743,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "5854522995ee5b78bd6f4d7e2f9796f3814da9edd9d9240c86643a00ba5d11c8"
+    },
+    {
+      "id": "ag_news:test:4468",
+      "row": 4468,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "696c20ef78c5d868fc982e2275d296a0f0420510c46770c878f25aeacda13894"
+    },
+    {
+      "id": "boolq:validation:1173",
+      "row": 1173,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "bb1c6abb570f457bf58ff1e541ad190b5760a6c5bc49e64c4d5ef70fbec7c341"
+    },
+    {
+      "id": "sst5:test:1059",
+      "row": 1059,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "f58a1db8da40d96e842a2a0db8684ce5fee5d600b003ecf038a9006f785d25f1"
+    },
+    {
+      "id": "ag_news:test:3491",
+      "row": 3491,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "bfdc8b4e272f2ada4ae6abec90187238280b34a2303795a341039dacfad211d6"
+    },
+    {
+      "id": "boolq:validation:704",
+      "row": 704,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "6c70d3163a530e42ad04af053b181d0f1a434bb201e1ada87897372cc93b7266"
+    },
+    {
+      "id": "sst5:test:474",
+      "row": 474,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "383974e9b4e7997fadc0814ec0ae429cb96511228708a39aa9a4fc1fda587ea6"
+    },
+    {
+      "id": "ag_news:test:349",
+      "row": 349,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "ee1387ba8624d5aba1f795772fedd1463f0eaa030a43328ffe3f01196cde5dc5"
+    },
+    {
+      "id": "boolq:validation:150",
+      "row": 150,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "846cfb01e97972e29e601cf0345525ccfbeb2df633037f56fb3d495a8fdb88e6"
+    },
+    {
+      "id": "sst5:test:104",
+      "row": 104,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "6c2bdf674825c47fb66488e0e636059b86126b921e5ef9b151e06027f479a3c4"
+    },
+    {
+      "id": "ag_news:test:255",
+      "row": 255,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "68508f6f50df86c47c6b72c2bba77d8a41207551392b6a3338783d8f8881c2d3"
+    },
+    {
+      "id": "boolq:validation:2160",
+      "row": 2160,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "200d552667bc3d783fb7ee346166a4d23db54b010f204d419b2a55e1017246df"
+    },
+    {
+      "id": "sst5:test:101",
+      "row": 101,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "4c3856ba0604ee9e4573033ebb7e3260ea601262c2e1846cda3d1a7927c25b23"
+    },
+    {
+      "id": "ag_news:test:957",
+      "row": 957,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "a478ea49c820d22cdc2ad4ab3523a0ef43c7e895d2299286932191ea3fea1de2"
+    },
+    {
+      "id": "boolq:validation:2998",
+      "row": 2998,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "75c7a553c470d2bd814ca39670e6ce95e3e958532f3e92a7cafba2a1312b6557"
+    },
+    {
+      "id": "sst5:test:27",
+      "row": 27,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "ed05815242c57328457bf470c511340aa17cf5cd53ab71d9139210afd343ece2"
+    },
+    {
+      "id": "ag_news:test:6278",
+      "row": 6278,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "f105a8ff58a4c4c2dccef903fba30740e014197381eee7ae946407f5a3ac2714"
+    },
+    {
+      "id": "boolq:validation:1558",
+      "row": 1558,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "ec2f448ae01479d79d802c0e650b5c4742756b71ac12cee175f0771d13b23bb3"
+    },
+    {
+      "id": "sst5:test:2092",
+      "row": 2092,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "6d6f149aecb6238cbef4f4c8636e608b089ddc72d85ee118e1d47a9c45c4fb8d"
+    },
+    {
+      "id": "ag_news:test:4046",
+      "row": 4046,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "e3014df16bc335cea934d7db9198048b8cda037e4581fb2633fb4c4564bfa5a1"
+    },
+    {
+      "id": "boolq:validation:2446",
+      "row": 2446,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "7f7fda95d05b39da9c2fb72ded34a7d813092528ce3a6165fa1102c4296a53ee"
+    },
+    {
+      "id": "sst5:test:173",
+      "row": 173,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "9d2416e8159851efd5e8390e90af503852532dd202c99016e45103cb3593b23d"
+    },
+    {
+      "id": "ag_news:test:2465",
+      "row": 2465,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "b1e75a21edb8670a4169015b68ae96f93004ab56399ad388430b34d6bb91c5b5"
+    },
+    {
+      "id": "boolq:validation:2695",
+      "row": 2695,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "d3258a7be3dadc0a49355a329bcd5549a290f57c82aad5143bdf2029d0257816"
+    },
+    {
+      "id": "sst5:test:55",
+      "row": 55,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "a22728a66021a3f33198819e01418262aa7204df112f3d928b2e952b1778bee6"
+    },
+    {
+      "id": "ag_news:test:5913",
+      "row": 5913,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "e58a90f9f48966383be3f664a2022909b5547038b0b24998594c8dc394755c52"
+    },
+    {
+      "id": "boolq:validation:2762",
+      "row": 2762,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "7f97db00c80b648ede459c47132969f0534f3c3eef36a03084d1c9ff9d57c578"
+    },
+    {
+      "id": "sst5:test:137",
+      "row": 137,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "c5942e858c70e6de5c9b3a15283ef82d5d419f28ef33fdfe4e0737867868301c"
+    },
+    {
+      "id": "ag_news:test:6131",
+      "row": 6131,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "265848574b2a7fa6b040bcd2a7304a1e9892b5f3fff2e4ee3f96f2144e642000"
+    },
+    {
+      "id": "boolq:validation:2602",
+      "row": 2602,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "37b8881e6a1509c40cbb675f3557ce53776f76a8f07e34260a3f30c9592ff37e"
+    },
+    {
+      "id": "sst5:test:50",
+      "row": 50,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "0a0e836890806605a515c4e37ffa5db79b1778277b798c916bf2810c531d04c9"
+    },
+    {
+      "id": "ag_news:test:4832",
+      "row": 4832,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "04d1dfd7b2db617ab1c960461672a2b8c75b3e8e24a8e37599c102670fc0066b"
+    },
+    {
+      "id": "boolq:validation:2910",
+      "row": 2910,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "d697de66d389a310b7903561cbdc09a1a6bf883b4633b35d441e983e7a3e8725"
+    },
+    {
+      "id": "sst5:test:1766",
+      "row": 1766,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "d9e41caa2b6cf240a77eb3c84e8a9a7223a84f5a2d22f5d3a0e45c4eda2cc895"
+    },
+    {
+      "id": "ag_news:test:6717",
+      "row": 6717,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "c4c44fc2f00ab0276efa3c9d70499ee950cec9fa784b2ec4a394482779349fa6"
+    },
+    {
+      "id": "boolq:validation:1165",
+      "row": 1165,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "2b432ce444287a959c316abe6f5179a96254ca5b79056d1c47ba7aaee554a6d6"
+    },
+    {
+      "id": "sst5:test:2182",
+      "row": 2182,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "a3275478d086494d491c1006e30336b27da0c6c91cb8de8c1c52cf7f9f8f730a"
+    },
+    {
+      "id": "ag_news:test:7532",
+      "row": 7532,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "e63b50750ea0a853ffe669a6077aa0854b61be6ea13cedbf6faf45da75864241"
+    },
+    {
+      "id": "boolq:validation:2451",
+      "row": 2451,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "b78c5663ca76e8e01c9cb18f15d83ae32f11a613cb231db9268afb9add700e6d"
+    },
+    {
+      "id": "sst5:test:1677",
+      "row": 1677,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "76468c258ad9910f0832c1fd7c59064f1b020377fbfff892d7584fa9f0bf8932"
+    },
+    {
+      "id": "ag_news:test:1773",
+      "row": 1773,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "a434fbd0bc03559d07d86937163c0133ccbc061292704247e6411a43712dd895"
+    },
+    {
+      "id": "boolq:validation:1467",
+      "row": 1467,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "2169d4c20e748d7ad439dd1a34fa932f25a50675e8c1fa89a78295420b1c7ff7"
+    },
+    {
+      "id": "sst5:test:2011",
+      "row": 2011,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "bcd7569383c5c3004c508ad0dcaa866e2dd9224b40d2168c94b138c87487474d"
+    },
+    {
+      "id": "ag_news:test:4955",
+      "row": 4955,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "d1211d021145189e29818b54b16b9e505b0c45ed5fb7434cb66f13417a34c211"
+    },
+    {
+      "id": "boolq:validation:1256",
+      "row": 1256,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "e8778f2be91b42f31b9d774e7623a21819cf1beb2737ece133e6f3065d3248f8"
+    },
+    {
+      "id": "sst5:test:449",
+      "row": 449,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "a932838a00fd221a41904036b5ca8fb46e46e7624e4472a9950f46b21fa7aef1"
+    },
+    {
+      "id": "ag_news:test:5397",
+      "row": 5397,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "028342225ad33c94653497ebe74fdba7120771c6c55e54f5cdd45912b86898b2"
+    },
+    {
+      "id": "boolq:validation:3254",
+      "row": 3254,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "62e96f6c2972514711fc2ff516394be514ae7c309acad88c499b6c91fdaef0ae"
+    },
+    {
+      "id": "sst5:test:1757",
+      "row": 1757,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "a868c42924613af7d8e790b5fd6e70faa0a27af20e8a0288acb29abbafbceb77"
+    },
+    {
+      "id": "ag_news:test:2368",
+      "row": 2368,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "e70b256c098853624fb3212c6234244270accdb0a367d6ca8fc0190b36f6f7ac"
+    },
+    {
+      "id": "boolq:validation:1869",
+      "row": 1869,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "90b74d88196388a7291bf4a0e628f9bbbbe8df0d9d5a6df7e4dd3bb5f4b19550"
+    },
+    {
+      "id": "sst5:test:393",
+      "row": 393,
+      "task": "sst5",
+      "gold": 1,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "b1dd259488d661fa2839e0f2d24bed60caaff237dd40ac7e784db50d02923be0"
+    },
+    {
+      "id": "ag_news:test:13",
+      "row": 13,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "f8d6b7e8b1fd9579fad8ab624258d14d04352103f30eab2808d104f91ff277e3"
+    },
+    {
+      "id": "boolq:validation:832",
+      "row": 832,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "292d58836130af86914bf764730781f8de64213db4494c1834a4a4906b1f8d1b"
+    },
+    {
+      "id": "sst5:test:2090",
+      "row": 2090,
+      "task": "sst5",
+      "gold": 0,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "39645e6b9eab1e31e22408086a19327753b5a8bfe17414ab9e851b188cb9a9a0"
+    },
+    {
+      "id": "ag_news:test:7428",
+      "row": 7428,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "ba1069b7572ca0f2ca6f7ee8cb101ca99b90eee350dc2c2081130c113bd48da1"
+    },
+    {
+      "id": "boolq:validation:1963",
+      "row": 1963,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "bc1f88ef8d739a4d2038a02d695a8f8b23c3ae7df4f960b6970a07312f6685af"
+    },
+    {
+      "id": "sst5:test:1432",
+      "row": 1432,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "d965f830b639b9411a1659ce4821af506f1cf19334c7b1b5a6f8a9648e41d073"
+    },
+    {
+      "id": "ag_news:test:3169",
+      "row": 3169,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "be57ca1927ed25a0733f636a7f31c8ff03eb8a854e15b621c4003192ea754a71"
+    },
+    {
+      "id": "boolq:validation:1451",
+      "row": 1451,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "fbaac88a55ec193d7885c1052583ca04f038a9650598f210ff2a8b4bb74e7d64"
+    },
+    {
+      "id": "sst5:test:1972",
+      "row": 1972,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "416768d37b1de02bf6618352c23f7e492483fa16984c7ff8040c4a8b0372e7ff"
+    },
+    {
+      "id": "ag_news:test:4879",
+      "row": 4879,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "f48325a864eba822dbdaba1c37c643431b46a24e1ca14a8ecc36a580f8a964f9"
+    },
+    {
+      "id": "boolq:validation:2973",
+      "row": 2973,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "f30fd3882867bd93792f36e8e31ed0ec291aff57cb1c88ef5b8f00483a9cf1c7"
+    },
+    {
+      "id": "sst5:test:1094",
+      "row": 1094,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "e095c12ef066d8179c902e1df7bafd753fd60e0ef2d687b6e682a95f6d089c41"
+    },
+    {
+      "id": "ag_news:test:1559",
+      "row": 1559,
+      "task": "ag_news",
+      "gold": 0,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "28338a476d8a5b9ef2d272eca283c8c261ffd08ded9d28f4505836faaf94fee8"
+    },
+    {
+      "id": "boolq:validation:851",
+      "row": 851,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "b9736ba20045a4fc516d2ac97f6f7dc3d180cc078b1a840dbcc992f1714c33bc"
+    },
+    {
+      "id": "sst5:test:83",
+      "row": 83,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "ed64f263b6eee4c54788026951f13609e2a9bc1e014fce411ecf5d29776ac2d7"
+    },
+    {
+      "id": "ag_news:test:6369",
+      "row": 6369,
+      "task": "ag_news",
+      "gold": 2,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "f939a19846ada6107ea1ab2cbff17cd0be63b23630c3c1b1f09370a5a2244379"
+    },
+    {
+      "id": "boolq:validation:3159",
+      "row": 3159,
+      "task": "boolq",
+      "gold": 1,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "0e7a95b124c89fbd4ef5a62b04edbf288ee9c968ca137039ae8d3a7f7ebb5631"
+    },
+    {
+      "id": "sst5:test:1831",
+      "row": 1831,
+      "task": "sst5",
+      "gold": 3,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "e2cfb950fc9e25c4602bb72a2f18d50541f33f73579b7d24d585175c308337dd"
+    },
+    {
+      "id": "ag_news:test:6801",
+      "row": 6801,
+      "task": "ag_news",
+      "gold": 3,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "1e1b2876b0b0d254d37e9ad486f537926574cc83b29346113e96b5f9e175290c"
+    },
+    {
+      "id": "boolq:validation:3126",
+      "row": 3126,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "f9a363a87f980a7cb6c8d73ed28961a5a7ebc62b1e3f2ef3b32677e3d4f014d1"
+    },
+    {
+      "id": "sst5:test:1947",
+      "row": 1947,
+      "task": "sst5",
+      "gold": 2,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "81e451e0586e44c5f484d6ebbdc41884e6174a3d67d73e62daeac19ae2645a8c"
+    },
+    {
+      "id": "ag_news:test:2895",
+      "row": 2895,
+      "task": "ag_news",
+      "gold": 1,
+      "labels": [
+        "world",
+        "sports",
+        "business",
+        "science_technology"
+      ],
+      "inputHash": "56418771adcf37e35b16fd4290567ba24b540fc636ca5f5d5d1ef919ed574e83"
+    },
+    {
+      "id": "boolq:validation:449",
+      "row": 449,
+      "task": "boolq",
+      "gold": 0,
+      "labels": [
+        "no",
+        "yes"
+      ],
+      "inputHash": "8dca82abd9c4899e59de21ee669c6be3e259fa0ec8e48ab95ab3dcd06dcf3873"
+    },
+    {
+      "id": "sst5:test:1445",
+      "row": 1445,
+      "task": "sst5",
+      "gold": 4,
+      "labels": [
+        "very negative",
+        "negative",
+        "neutral",
+        "positive",
+        "very positive"
+      ],
+      "inputHash": "53112c6be450f1213c7d44da3797ed16bb4ca0475c6dab8ec11b76936576b9af"
+    }
+  ],
+  "expectedResults": 240,
+  "environment": {
+    "bun": "1.4.2",
+    "cpu": "AMD RYZEN AI MAX+ 395 w/ Radeon 8060S",
+    "memoryGiB": 119.647,
+    "os": "Microsoft Windows 11 Pro 10.0.26200",
+    "architecture": "x64",
+    "power": "unknown/battery",
+    "cores": 16,
+    "logicalProcessors": 32,
+    "gpu": "AMD Radeon(TM) 8060S Graphics",
+    "gpuArchitecture": "gfx1151",
+    "hip": "7.16.26362",
+    "torch": "2.15.0a0+rocm10.1.0a20260909",
+    "transformers": "5.11.0"
+  },
+  "gitCommit": "dc283d4fb7ba217182c0d45c9f251a8af54e2625",
+  "dirty": true,
+  "codeHashes": {
+    "src/engine.ts": "761095ee4addd176cec1ca657dd438e107229dd83b9c063a5b0c56cc6dc0381d",
+    "src/types.ts": "2c53ab73368b884f0e08d78dfd9eebdb67aba78d5287be9b1253f82d2893b044",
+    "src/config.ts": "66b37cd1c34557c999939bc0ea54cb8f80bebf1b6ab2bcbb95868ae8b6ee4f55",
+    "bun.lock": "7348addb921966e73d46c2133343fd0169c65a8d3bb15b5240cb0ae644c5cd60",
+    "scripts/eval/common.ts": "c87b7420a99110e8cd82fe8bc32d1b1d5ff6eed4c88edd69203a14a45e4dfa41",
+    "scripts/eval/data.ts": "d2af318f435c749c13630b076356d864b63344fcd56529568db7935789d3e9ab",
+    "scripts/eval/run.ts": "495b3701517c4a3c46f5e49753f0d920ad7707f84ff9cbce40543825cbaf219c"
+  },
+  "backendVersion": "5.11.0",
+  "models": [
+    {
+      "id": ".runtime/models/diffusiongemma-26B-A4B-it",
+      "object": "model",
+      "created": 0,
+      "owned_by": "local"
+    }
+  ],
+  "inspectedLocalModelSettings": null,
+  "runnerSettingsNote": "Best-effort whitelist from default oMLX settings location; not proof of effective runtime settings. Model weight revisions are not exposed by /v1/models.",
+  "originalGeneratedEnvironment": {
+    "bun": "1.4.2",
+    "cpu": null,
+    "memoryGiB": 0,
+    "os": null,
+    "architecture": "x64",
+    "power": "unknown/battery"
+  },
+  "environmentProvenance": "Hardware/backend fields copied from runtime.json; memoryGiB is Windows-visible RAM. originalGeneratedEnvironment retains the upstream macOS-only probe results.",
+  "backendName": "ROCm Transformers",
+  "status": "partial",
+  "completedResults": 41,
+  "finalizedAt": "2026-09-19T16:35:30.083Z",
+  "stopReason": "Stopped at the user's request to switch to Q8 because FP16 placed too much load on the PC.",
+  "excludedWarmups": 4,
+  "recovery": {
+    "originalPath": ".runtime/fp16-interrupted-results.original.jsonl",
+    "originalBytes": 40479,
+    "originalSHA256": "5859f3644eb759f38e8239801b3d45fdd9f25a7dc0accf6f8ce937b8495aec99",
+    "retainedBytes": 39430,
+    "retainedSHA256": "5996c85316661506548634f10067d198d90ddb8d3fa973f651dbddbe68d46f67",
+    "removedTrailingNULBytes": 1049,
+    "validatedRows": 41,
+    "duplicateKeys": 0,
+    "method": "Only the verified trailing NUL suffix was removed; every retained byte is unchanged."
+  },
+  "reportNotes": [
+    "Run stopped at the user's request to switch to Q8 because FP16 placed too much load on the PC. These 41 retained results are an incomplete, potentially unbalanced subset, not a completed comparison with the 240-request baseline. Four warm-ups across two execution segments are excluded. Recovery and original runtime-probe metadata are recorded in [manifest.json](manifest.json) and [runtime.json](runtime.json)."
+  ]
+}

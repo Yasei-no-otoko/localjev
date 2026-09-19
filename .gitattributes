@@ -1,0 +1,7 @@
+# Keep recorded artifact and integration-source hashes stable on Windows.
+eval/reports/** text eol=lf
+scripts/build-rocmfpx.ps1 text eol=lf
+scripts/eval/annotate-windows.ps1 text eol=lf
+
+# Unified diffs require a space marker on empty context lines.
+scripts/rocmfpx-http.patch text eol=lf -whitespace

@@ -1,0 +1,509 @@
+{
+  "recordedAt": "2026-09-19T16:52:47.184171+00:00",
+  "backend": {
+    "name": "ROCmFPX",
+    "source": "https://github.com/charlie12345/ROCmFPX",
+    "revision": "c49ebdbd5c9f01ec242369f9e7f7967855f80cba",
+    "patch": "scripts/rocmfpx-http.patch",
+    "device": "ROCm0",
+    "gpu": "AMD Radeon(TM) 8060S Graphics",
+    "targetArchitecture": "gfx1151",
+    "structuredOutput": "prompt_only",
+    "perRequestSeed": true,
+    "kvCacheBetweenRequests": "cleared",
+    "decoder": "diffusion_generate_entropy_bound",
+    "schedule": {
+      "maxDenoisingSteps": 48,
+      "tMin": 0.4,
+      "tMax": 0.8,
+      "entropyBound": 0.1,
+      "stabilityThreshold": 1,
+      "confidenceThreshold": 0.005,
+      "canvasTokens": 256
+    },
+    "temperatureNote": "The evaluator requests temperature=0; the native entropy-bound decoder uses its original temperature schedule instead.",
+    "startupEvidence": [
+      "0.07.771.648 I load_tensors: offloaded 31/31 layers to GPU",
+      "0.07.771.670 I load_tensors:   CPU_Mapped model buffer size =   748.00 MiB",
+      "0.07.771.672 I load_tensors:        ROCm0 model buffer size = 25261.59 MiB",
+      "0.26.309.342 I sched_reserve:      ROCm0 compute buffer size =  8453.25 MiB",
+      "0.26.309.357 I sched_reserve:  ROCm_Host compute buffer size =   432.09 MiB",
+      "0.26.309.829 I slot   load_model: id  0 | task -1 | new slot, n_ctx = 8192"
+    ],
+    "launchArguments": [
+      "-m",
+      ".runtime/models/diffusiongemma-rocmfpx-q8/diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT.gguf",
+      "--alias",
+      "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8001",
+      "-dev",
+      "ROCm0",
+      "-ngl",
+      "999",
+      "-fa",
+      "on",
+      "-np",
+      "1",
+      "-c",
+      "8192",
+      "-b",
+      "8192",
+      "-ub",
+      "8192",
+      "-n",
+      "256",
+      "--seed",
+      "20260918",
+      "--jinja",
+      "-t",
+      "16",
+      "-tb",
+      "16",
+      "--no-warmup",
+      "--cache-ram",
+      "0",
+      "-fit",
+      "off",
+      "-lv",
+      "4"
+    ]
+  },
+  "model": {
+    "source": "kingjones777/DiffusionGemma-26B-A4B-it-ROCmFP4-GGUF",
+    "revision": "2eeff1460e24a0cf45fb98f0def57099c57823fc",
+    "file": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT.gguf",
+    "bytes": 26504415840,
+    "sha256": "e724f2fb8ecae63d916d7075c776c85d239ca72d7e3c1f9506f0bcf7c2691063",
+    "architecture": "diffusion-gemma",
+    "fileType": 115,
+    "tensorCount": 692,
+    "tensorTypes": {
+      "F32": 423,
+      "Q8_0_ROCMFPX": 109,
+      "Q8_0": 160
+    }
+  },
+  "machine": {
+    "version": "10.0.26200",
+    "cpu": "AMD RYZEN AI MAX+ 395 w/ Radeon 8060S",
+    "os": "Microsoft Windows 11 Pro",
+    "logicalProcessors": 32,
+    "visibleMemoryGiB": 119.647,
+    "cores": 16
+  },
+  "build": {
+    "platform": "Windows AMD64",
+    "compiler": "AMD Clang 24.0.0",
+    "hip": "7.16.26362",
+    "msvc": "14.44.35207",
+    "jobs": 32,
+    "GGML_HIP": true,
+    "GGML_HIP_FORCE_MMQ": true,
+    "GGML_HIP_ROCWMMA_FATTN": false,
+    "GGML_HIP_ROCMI4_W4A4": false,
+    "gpuTargets": [
+      "gfx1151"
+    ]
+  },
+  "artifactSha256": {
+    "scripts/build-rocmfpx.ps1": "723c642a8af651e411c121943261e2e510a86f222bf564c776d53bd50a80791b",
+    "scripts/rocmfpx-http.patch": "1e0cb3dde30cd4e9f4d52ce8b9546fa14f0060ecb508c6a2fdb65aa4b32a8a17",
+    ".runtime/rocmfpx-build/bin/llama-server.exe": "6151d43557e6bbe86257ad8beec3eebb8a007d14ab4943f9944e009a7f91feca",
+    ".runtime/rocmfpx-build/bin/llama.dll": "2a2fa1b25f68469b13f0d6b0421208cf39a5cf3a790b2c41c4c90dcd1c01d351",
+    ".runtime/rocmfpx-build/bin/ggml-hip.dll": "434e7156c93d673a690f12195b7d906a12c411594231e28a495797b0cd29fad0",
+    "scripts/eval/annotate-windows.ps1": "4e63421cffef880fcde2f738345a28ad85a2480bc62cf50bb93db431ac676a48"
+  },
+  "referenceRun": "2026-09-18-bakeoff",
+  "comparability": {
+    "sameNonModelConfig": true,
+    "suiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859",
+    "orderedExamplesVerified": 120,
+    "inputHashMismatches": 0,
+    "stateHashesVerified": 240,
+    "stateHashMismatches": 0,
+    "sourceChecksPassed": 4,
+    "backendDifferences": [
+      "Windows vs macOS",
+      "ROCmFPX custom Q8 vs MLX 4-bit",
+      "native diffusion implementation vs oMLX",
+      "schema prompting and chat template handling"
+    ],
+    "timingNote": "Same-input model/runtime comparison; does not isolate GPU hardware speed."
+  },
+  "contextAudit": {
+    "method": "HF tokenizer and Jinja, exact first prompts plus two synthetic 256-token retry responses",
+    "maxFirstPromptTokens": {
+      "short": 617,
+      "long": 3488
+    },
+    "maxTwoRetryPromptTokens": {
+      "short": 1211,
+      "long": 4082
+    },
+    "maxTwoRetryPlusCanvas": 4338,
+    "configuredContext": 8192,
+    "configuredBatch": 8192,
+    "configuredMicrobatch": 8192,
+    "note": "Token lengths are estimates for native GGUF rendering; context includes ample margin."
+  },
+  "preflight": {
+    "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT",
+    "elapsedMs": 8314.6042,
+    "result": {
+      "answers": {
+        "department": {
+          "type": "choice",
+          "choice": "technical",
+          "probabilities": {
+            "billing": 0.05,
+            "technical": 0.9,
+            "sales": 0.05
+          },
+          "confidence": 0.6410037503534697
+        },
+        "frustration": {
+          "type": "score",
+          "score": 0.9000000000000001,
+          "legend": {
+            "0": "Calm",
+            "1": "Frustrated but civil",
+            "2": "Very angry"
+          },
+          "probabilities": {
+            "0": 0.20000000000000004,
+            "1": 0.7000000000000001,
+            "2": 0.10000000000000002
+          },
+          "confidence": 0.27015330083790245
+        },
+        "urgent": {
+          "type": "noul",
+          "noul": 0.8
+        }
+      },
+      "inputTokens": 471,
+      "outputTokens": 46
+    },
+    "attempts": [
+      {
+        "status": 200,
+        "payload": {
+          "structured_output": "prompt_only",
+          "choices": [
+            {
+              "finish_reason": "stop",
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"answers\":{\"q1\":[0.05,0.9,0.05],\"q2\":[0.2,0.7,0.1],\"q3\":0.8}}"
+              }
+            }
+          ],
+          "created": 1789836635,
+          "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT",
+          "system_fingerprint": "b1-c49ebdb",
+          "object": "chat.completion",
+          "usage": {
+            "completion_tokens": 46,
+            "prompt_tokens": 471,
+            "total_tokens": 517,
+            "prompt_tokens_details": {
+              "cached_tokens": 0
+            }
+          },
+          "id": "chatcmpl-iA9A5q1k95He0AMCR44ryrptYRCQOEGq"
+        }
+      }
+    ]
+  },
+  "fp16PartialRun": "../2026-09-20-gfx1151-diffusiongemma; kept separate, no FP16 rows reused",
+  "httpValidation": {
+    "timestamp_utc": "2026-09-19T16:52:00.689106+00:00",
+    "base_url": "http://127.0.0.1:8001",
+    "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT",
+    "source_revision": "c49ebdbd5c9f01ec242369f9e7f7967855f80cba",
+    "patch_sha256": "1e0cb3dde30cd4e9f4d52ce8b9546fa14f0060ecb508c6a2fdb65aa4b32a8a17",
+    "checks": [
+      {
+        "name": "schema_existing_system_once",
+        "endpoint": "/apply-template",
+        "status": 200,
+        "elapsed_seconds": 0.065,
+        "assertions": {
+          "http_200": true,
+          "instruction_once": true,
+          "compact_unicode_schema_once": true,
+          "order": true
+        },
+        "passed": true,
+        "prompt_chars": 300,
+        "prompt_sha256": "c0a576bcc8f0c8f112e847ed15043dc3550ee6c498a6e9295c617e8bb05cff62"
+      },
+      {
+        "name": "schema_user_only_system_insert",
+        "endpoint": "/apply-template",
+        "status": 200,
+        "elapsed_seconds": 0.005,
+        "assertions": {
+          "http_200": true,
+          "instruction_once": true,
+          "schema_once": true,
+          "before_user": true
+        },
+        "passed": true,
+        "prompt_chars": 278,
+        "prompt_sha256": "d263ba5c9513940333bad26dc37fda3930114c59e6693380b6374cd3a93f099e"
+      },
+      {
+        "name": "json_object_instruction",
+        "endpoint": "/apply-template",
+        "status": 200,
+        "elapsed_seconds": 0.003,
+        "assertions": {
+          "http_200": true,
+          "instruction_once": true
+        },
+        "passed": true,
+        "prompt_chars": 154,
+        "prompt_sha256": "67e790441e510848800a43eb171b67b5afdac37ee70f3c2e6a70a30aee44e44a"
+      },
+      {
+        "name": "plain_template_baseline",
+        "endpoint": "/apply-template",
+        "status": 200,
+        "elapsed_seconds": 0.003,
+        "assertions": {
+          "http_200": true,
+          "prompt_present": true
+        },
+        "passed": true,
+        "prompt_chars": 93,
+        "prompt_sha256": "97adb3729fc0ed2992f18fb5527794e38c7472170d3f093723a638e59f85b282"
+      },
+      {
+        "name": "text_format_unchanged",
+        "endpoint": "/apply-template",
+        "status": 200,
+        "elapsed_seconds": 0.003,
+        "assertions": {
+          "http_200": true,
+          "same_as_plain": true
+        },
+        "passed": true,
+        "prompt_chars": 93,
+        "prompt_sha256": "97adb3729fc0ed2992f18fb5527794e38c7472170d3f093723a638e59f85b282"
+      },
+      {
+        "name": "invalid_schema_rejected",
+        "endpoint": "/apply-template",
+        "status": 400,
+        "elapsed_seconds": 0.027,
+        "assertions": {
+          "http_400": true,
+          "schema_error": true
+        },
+        "passed": true,
+        "error": {
+          "code": 400,
+          "message": "response_format.json_schema.schema must be an object",
+          "type": "invalid_request_error"
+        }
+      },
+      {
+        "name": "invalid_seed_-1",
+        "endpoint": "/v1/chat/completions",
+        "seed": -1,
+        "status": 400,
+        "elapsed_seconds": 0.032,
+        "assertions": {
+          "http_400": true,
+          "seed_error": true,
+          "no_completion": true
+        },
+        "passed": true,
+        "error": {
+          "code": 400,
+          "message": "seed must be an integer from 0 to 4294967295",
+          "type": "invalid_request_error"
+        }
+      },
+      {
+        "name": "invalid_seed_4294967296",
+        "endpoint": "/v1/chat/completions",
+        "seed": 4294967296,
+        "status": 400,
+        "elapsed_seconds": 0.027,
+        "assertions": {
+          "http_400": true,
+          "seed_error": true,
+          "no_completion": true
+        },
+        "passed": true,
+        "error": {
+          "code": 400,
+          "message": "seed must be an integer from 0 to 4294967295",
+          "type": "invalid_request_error"
+        }
+      },
+      {
+        "name": "invalid_seed_1.5",
+        "endpoint": "/v1/chat/completions",
+        "seed": 1.5,
+        "status": 400,
+        "elapsed_seconds": 0.004,
+        "assertions": {
+          "http_400": true,
+          "seed_error": true,
+          "no_completion": true
+        },
+        "passed": true,
+        "error": {
+          "code": 400,
+          "message": "seed must be an integer from 0 to 4294967295",
+          "type": "invalid_request_error"
+        }
+      },
+      {
+        "name": "invalid_seed_true",
+        "endpoint": "/v1/chat/completions",
+        "seed": true,
+        "status": 400,
+        "elapsed_seconds": 0.004,
+        "assertions": {
+          "http_400": true,
+          "seed_error": true,
+          "no_completion": true
+        },
+        "passed": true,
+        "error": {
+          "code": 400,
+          "message": "seed must be an integer from 0 to 4294967295",
+          "type": "invalid_request_error"
+        }
+      },
+      {
+        "name": "invalid_seed_\"1\"",
+        "endpoint": "/v1/chat/completions",
+        "seed": "1",
+        "status": 400,
+        "elapsed_seconds": 0.005,
+        "assertions": {
+          "http_400": true,
+          "seed_error": true,
+          "no_completion": true
+        },
+        "passed": true,
+        "error": {
+          "code": 400,
+          "message": "seed must be an integer from 0 to 4294967295",
+          "type": "invalid_request_error"
+        }
+      }
+    ],
+    "phase": "complete",
+    "completed_utc": "2026-09-19T16:52:29.187698+00:00",
+    "passed": true,
+    "check_count": 11,
+    "note": "Only /apply-template and invalid-seed completions were tested; no valid generation was requested.",
+    "valid_generation_requests": 0,
+    "invalid_completion_requests": 5
+  },
+  "validation": {
+    "bunTestsPassed": 27,
+    "bunTestsFailed": 0,
+    "typescript": "passed",
+    "nativeBuild": "passed; 486 build steps, 32 parallel jobs",
+    "reportOnlyRecheck": "10 evaluation tests and TypeScript check passed after adding reproducible report notes.",
+    "windowsMetadataHelper": "Executed twice successfully after completion; originalEnvironment preserved, CPU name trimmed and RAM recorded to three decimals."
+  },
+  "runStartedAt": "2026-09-19T16:54:27.651Z",
+  "originalManifestEnvironment": {
+    "bun": "1.4.2",
+    "cpu": null,
+    "memoryGiB": 0,
+    "os": null,
+    "architecture": "x64",
+    "power": "unknown/battery"
+  },
+  "status": "complete",
+  "evaluationCodeParity": {
+    "src/engine.ts": {
+      "rawSha256": "761095ee4addd176cec1ca657dd438e107229dd83b9c063a5b0c56cc6dc0381d",
+      "lfSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "baselineSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "matchesAfterLfNormalization": true
+    },
+    "src/types.ts": {
+      "rawSha256": "2c53ab73368b884f0e08d78dfd9eebdb67aba78d5287be9b1253f82d2893b044",
+      "lfSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "baselineSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "matchesAfterLfNormalization": true
+    },
+    "src/config.ts": {
+      "rawSha256": "66b37cd1c34557c999939bc0ea54cb8f80bebf1b6ab2bcbb95868ae8b6ee4f55",
+      "lfSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "baselineSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "matchesAfterLfNormalization": true
+    },
+    "bun.lock": {
+      "rawSha256": "7348addb921966e73d46c2133343fd0169c65a8d3bb15b5240cb0ae644c5cd60",
+      "lfSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "baselineSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/common.ts": {
+      "rawSha256": "c87b7420a99110e8cd82fe8bc32d1b1d5ff6eed4c88edd69203a14a45e4dfa41",
+      "lfSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "baselineSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/data.ts": {
+      "rawSha256": "d2af318f435c749c13630b076356d864b63344fcd56529568db7935789d3e9ab",
+      "lfSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "baselineSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/run.ts": {
+      "rawSha256": "495b3701517c4a3c46f5e49753f0d920ad7707f84ff9cbce40543825cbaf219c",
+      "lfSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "baselineSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "matchesAfterLfNormalization": true
+    }
+  },
+  "evaluationCodeParityNote": "Windows CRLF causes raw byte hash differences; all seven inference/evaluation files match the reference after LF normalization. Report presentation alone supports backend names and manifest notes.",
+  "runFinishedAt": "2026-09-19T17:35:58.055Z",
+  "completedResults": 240,
+  "terminalFailures": [
+    {
+      "key": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT|2048|sst5:test:763",
+      "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object",
+      "attempts": 3
+    },
+    {
+      "key": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX_AGENT|2048|sst5:test:1831",
+      "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object",
+      "attempts": 3
+    }
+  ],
+  "warmupCount": 2,
+  "serverStoppedAfterEvaluation": true,
+  "resultFileSha256": "694fe3865f1323a4097b70dc2874da92f052690f831aa970de5808621ab5d124",
+  "finalAudit": {
+    "uniqueMeasuredResults": 240,
+    "cells": 6,
+    "rowsPerCell": 40,
+    "validResults": 238,
+    "terminalFailures": 2,
+    "measuredUpstreamAttempts": 256,
+    "allAttemptHttpStatuses": 200,
+    "validWarmups": 2,
+    "inputHashMismatches": 0,
+    "stateHashMismatches": 0,
+    "summaryMetricMismatches": 0,
+    "nulBytes": 0,
+    "duplicateKeys": 0
+  }
+}

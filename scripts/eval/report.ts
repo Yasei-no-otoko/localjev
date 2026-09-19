@@ -43,7 +43,8 @@ export async function report(directory: string): Promise<void> {
   const lines = [
     `# LocalJev bake-off: ${manifest.runId}`, "",
     `Status: **${summary.complete ? "complete" : "PARTIAL"}** (${summary.results}/${summary.expectedResults} measured requests).`, "",
-    `Runtime: Bun ${manifest.environment.bun}; ${manifest.environment.cpu}; ${manifest.environment.memoryGiB} GiB RAM; oMLX ${manifest.backendVersion ?? "unknown"}.`,
+    ...(manifest.reportNotes ?? []).flatMap((note: string) => [note, ""]),
+    `Runtime: Bun ${manifest.environment.bun}; ${manifest.environment.cpu}; ${manifest.environment.memoryGiB} GiB RAM; ${manifest.backendName ?? "oMLX"} ${manifest.backendVersion ?? "unknown"}.`,
     `Seed ${config.seed}; configured ${config.samplesPerTask} balanced examples/task; selected ${manifest.examples.length} total examples${manifest.examples.length < config.samplesPerTask * 3 ? " (**LIMITED PILOT, not necessarily balanced**)" : ""}; temperature ${config.temperature}; max output ${config.maxOutputTokens}; up to ${config.malformedRetries} corrective retries; one request in flight.`,
     `Cache policy: **${config.cacheMode}**. Background sizes are **words added**, not context-window settings or exact token budgets. Token counts below are backend-reported.`, "",
     "## Quality × model × input length", "",

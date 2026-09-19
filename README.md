@@ -4,11 +4,12 @@ A local, Jev-compatible `POST /v1/systemone` API written in TypeScript for
 [Bun](https://bun.sh/), backed by DiffusionGemma through an OpenAI-compatible
 Chat Completions endpoint.
 
-This fork adds a **Windows / AMD Radeon 8060S (gfx1151) ROCm backend** for
-the original DiffusionGemma checkpoint, plus a PowerShell launcher and an
-end-to-end HTTP smoke check. Start with [the GFX1151 guide](docs/gfx1151.md).
-The AMD path runs FP16 through PyTorch; it does not use the Mac-only MLX
-4-bit checkpoint.
+This fork adds **Windows / AMD Radeon 8060S (gfx1151) ROCm backends** for
+DiffusionGemma: the original checkpoint through PyTorch and
+`Q8_0_ROCMFPX_AGENT.gguf` through ROCmFPX. Start with
+[the GFX1151 guide](docs/gfx1151.md) for setup and evaluation commands.
+The [240-request Q8 bake-off](eval/reports/2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx/report.md)
+uses the same examples and settings as the September 18 reference run.
 
 The original oMLX defaults target:
 

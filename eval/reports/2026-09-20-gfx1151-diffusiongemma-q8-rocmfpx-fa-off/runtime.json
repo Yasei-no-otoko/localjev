@@ -1,0 +1,256 @@
+{
+  "backend": {
+    "name": "ROCmFPX",
+    "source": "https://github.com/charlie12345/ROCmFPX",
+    "revision": "c49ebdbd5c9f01ec242369f9e7f7967855f80cba",
+    "device": "ROCm0",
+    "gpu": "AMD Radeon(TM) 8060S Graphics",
+    "targetArchitecture": "gfx1151",
+    "structuredOutput": "prompt_only",
+    "perRequestSeed": true,
+    "kvCacheBetweenRequests": "cleared",
+    "decoder": "diffusion_generate_entropy_bound",
+    "schedule": {
+      "maxDenoisingSteps": 48,
+      "tMin": 0.4,
+      "tMax": 0.8,
+      "entropyBound": 0.1,
+      "stabilityThreshold": 1,
+      "confidenceThreshold": 0.005,
+      "canvasTokens": 256
+    },
+    "temperatureNote": "The evaluator requests temperature=0; the native entropy-bound decoder uses its original temperature schedule instead.",
+    "launchArguments": [
+      "-m",
+      ".runtime/models/diffusiongemma-rocmfpx-q8/diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX.gguf",
+      "--alias",
+      "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8001",
+      "-dev",
+      "ROCm0",
+      "-ngl",
+      "999",
+      "-fa",
+      "off",
+      "-np",
+      "1",
+      "-c",
+      "8192",
+      "-b",
+      "8192",
+      "-ub",
+      "8192",
+      "-n",
+      "256",
+      "--seed",
+      "20260918",
+      "--jinja",
+      "-t",
+      "16",
+      "-tb",
+      "16",
+      "--no-warmup",
+      "--cache-ram",
+      "0",
+      "-fit",
+      "off",
+      "-lv",
+      "4",
+      "--diffusion-kv-cache",
+      "on"
+    ],
+    "startupEvidence": [
+      "0.07.523.202 I load_tensors: offloaded 31/31 layers to GPU",
+      "0.07.523.219 I load_tensors:   CPU_Mapped model buffer size =   748.00 MiB",
+      "0.07.523.222 I load_tensors:        ROCm0 model buffer size = 24888.46 MiB",
+      "0.22.486.227 I llama_context: flash_attn    = disabled",
+      "0.24.608.141 I sched_reserve:      ROCm0 compute buffer size =  8280.00 MiB",
+      "0.24.608.153 I sched_reserve:  ROCm_Host compute buffer size =   688.09 MiB",
+      "0.24.608.565 I slot   load_model: id  0 | task -1 | new slot, n_ctx = 8192"
+    ],
+    "patches": [
+      "scripts/rocmfpx-http.patch",
+      "scripts/rocmfpx-json-output.patch",
+      "scripts/rocmfpx-entropy.patch"
+    ],
+    "outputPolicy": "Preserve complete canvas content until first EOG or requested token limit; no repetition heuristic.",
+    "schemaSerialization": "Readable separators matching Python json.dumps(schema, ensure_ascii=False) for the Engine schema; preserves strings and insertion order.",
+    "flashAttention": false,
+    "prefixKvCache": true,
+    "entropyArithmetic": "FP32 logits and expf; FP64 normalization, CDF, per-position entropy and canvas mean; zero-probability bins excluded from selection."
+  },
+  "model": {
+    "source": "kingjones777/DiffusionGemma-26B-A4B-it-ROCmFP4-GGUF",
+    "revision": "2eeff1460e24a0cf45fb98f0def57099c57823fc",
+    "file": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX.gguf",
+    "bytes": 26113166432,
+    "sha256": "0457845b7b56fbc5c651d555eb217399cea77c12cc8efe110ecbfc00bccb8c90",
+    "architecture": "diffusion-gemma",
+    "fileType": 111,
+    "tensorCount": 692,
+    "tensorTypes": {
+      "F32": 423,
+      "Q8_0_ROCMFPX": 268,
+      "Q8_0": 1
+    },
+    "metadataComparisonToAgent": {
+      "tokenizerCanonicalJsonSha256": "f78382c53919bf8497f6b99098e04440089d8719753b91142b1da480520f1f3f",
+      "chatTemplateSha256": "2f1b4d75d067bae3fe44e676721c7f077d243bc007156cb9c2f8b5836613d082",
+      "chatTemplateCharacters": 17336,
+      "tokenizerIdentical": true,
+      "chatTemplateIdentical": true,
+      "nonTokenizerMetadataDifferences": [
+        "general.file_type"
+      ],
+      "entropyBoundMetadataOverrides": false,
+      "note": "Read-only GGUFReader field.contents() values. Tokenizer hash covers tokenizer.* except tokenizer.chat_template using json.dumps(ensure_ascii=False, sort_keys=True, separators=(comma,colon)), UTF-8; arrays retain order. Chat template is hashed separately as exact UTF-8 text."
+    }
+  },
+  "machine": {
+    "version": "10.0.26200",
+    "cpu": "AMD RYZEN AI MAX+ 395 w/ Radeon 8060S",
+    "os": "Microsoft Windows 11 Pro",
+    "logicalProcessors": 32,
+    "visibleMemoryGiB": 119.647,
+    "cores": 16
+  },
+  "build": {
+    "platform": "Windows AMD64",
+    "compiler": "AMD Clang 24.0.0",
+    "hip": "7.16.26362",
+    "msvc": "14.44.35207",
+    "jobs": 32,
+    "GGML_HIP": true,
+    "GGML_HIP_FORCE_MMQ": true,
+    "GGML_HIP_ROCWMMA_FATTN": false,
+    "GGML_HIP_ROCMI4_W4A4": false,
+    "gpuTargets": [
+      "gfx1151"
+    ]
+  },
+  "evaluationCodeParity": {
+    "src/engine.ts": {
+      "rawSha256": "761095ee4addd176cec1ca657dd438e107229dd83b9c063a5b0c56cc6dc0381d",
+      "lfSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "baselineSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "matchesAfterLfNormalization": true
+    },
+    "src/types.ts": {
+      "rawSha256": "2c53ab73368b884f0e08d78dfd9eebdb67aba78d5287be9b1253f82d2893b044",
+      "lfSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "baselineSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "matchesAfterLfNormalization": true
+    },
+    "src/config.ts": {
+      "rawSha256": "66b37cd1c34557c999939bc0ea54cb8f80bebf1b6ab2bcbb95868ae8b6ee4f55",
+      "lfSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "baselineSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "matchesAfterLfNormalization": true
+    },
+    "bun.lock": {
+      "rawSha256": "7348addb921966e73d46c2133343fd0169c65a8d3bb15b5240cb0ae644c5cd60",
+      "lfSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "baselineSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/common.ts": {
+      "rawSha256": "c87b7420a99110e8cd82fe8bc32d1b1d5ff6eed4c88edd69203a14a45e4dfa41",
+      "lfSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "baselineSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/data.ts": {
+      "rawSha256": "d2af318f435c749c13630b076356d864b63344fcd56529568db7935789d3e9ab",
+      "lfSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "baselineSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/run.ts": {
+      "rawSha256": "495b3701517c4a3c46f5e49753f0d920ad7707f84ff9cbce40543825cbaf219c",
+      "lfSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "baselineSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "matchesAfterLfNormalization": true
+    }
+  },
+  "evaluationCodeParityNote": "Windows CRLF causes raw byte hash differences; all seven inference/evaluation files match the reference after LF normalization. Report presentation alone supports backend names and manifest notes.",
+  "recordedAt": "2026-09-20T02:54:07.592523+00:00",
+  "status": "complete",
+  "runStartedAt": "2026-09-20T02:52:11.409Z",
+  "referenceRun": "2026-09-18-bakeoff",
+  "improvementLoopTarget": {
+    "measuredRequests": 240,
+    "validFinalOutputs": 240,
+    "definition": "Final Engine-valid outputs after the unchanged maximum two corrective retries; distinct from classification accuracy."
+  },
+  "originalManifestEnvironment": {
+    "bun": "1.4.2",
+    "cpu": null,
+    "memoryGiB": 0,
+    "os": null,
+    "architecture": "x64",
+    "power": "unknown/battery"
+  },
+  "artifactSha256": {
+    "scripts/build-rocmfpx.ps1": "e299f2c22121cb22c17f7650dedbbc47e5cb59897bab80916de8ca139ddd07e9",
+    "scripts/rocmfpx-http.patch": "1e0cb3dde30cd4e9f4d52ce8b9546fa14f0060ecb508c6a2fdb65aa4b32a8a17",
+    ".runtime/rocmfpx-build/bin/llama-server.exe": "c1fd37f3e878cddc0034350ca94c6016318756a3a6d0783149136efb0eaa559a",
+    ".runtime/rocmfpx-build/bin/llama.dll": "2a2fa1b25f68469b13f0d6b0421208cf39a5cf3a790b2c41c4c90dcd1c01d351",
+    ".runtime/rocmfpx-build/bin/ggml-hip.dll": "434e7156c93d673a690f12195b7d906a12c411594231e28a495797b0cd29fad0",
+    "scripts/eval/annotate-windows.ps1": "4e63421cffef880fcde2f738345a28ad85a2480bc62cf50bb93db431ac676a48",
+    "scripts/rocmfpx-json-output.patch": "7e485a09eccd3f679dc67c88150c45adbe432451f3538192b6e8710443a1350c",
+    ".runtime/rocmfpx-build/bin/llama-common.dll": "a90730c83b1a1ee3056baa44ff3ad995a2d3fa6f87e27abd8f41420eb8fb9418",
+    ".runtime/rocmfpx-build/bin/test-server-diffusion.exe": "2ebd2f03e246f3b5ec875cfacd60359436fdec849ac0b1ef59aa24bce06cc1af",
+    "scripts/rocmfpx-entropy.patch": "0babd0ac2a81b2972a5b4329e56fcd51769a1713464704bb088a55d6fac5e858",
+    ".runtime/rocmfpx-build/bin/test-diffusion-entropy.exe": "ffb596e5d189b67aa1e718b3315029896b4800bc952234cde38a3c90181ff0ee"
+  },
+  "comparability": {
+    "sameConfigAsPreviousStandard": true,
+    "sameSuiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859",
+    "sameOrderedExamples": true,
+    "sameRawEvaluatorCodeHashes": true,
+    "differencesFromPreviousFixedRun": [
+      "Flash Attention disabled; prefix cache explicitly enabled",
+      "FP64 entropy/CDF reduction patch",
+      "Fresh cache-busting nonce"
+    ],
+    "nonce": "cbcc7b57-c986-45b3-adbb-e83145850fa3"
+  },
+  "validation": {
+    "buildJobs": 32,
+    "outputRegressionCases": 20,
+    "entropyRegressionExecutable": "passed",
+    "threePatchFreshAndUpgradeSequence": "git index applies all three stages and reproduces native working source; index restored afterwards",
+    "buildHelperIntegration": "Full build with -BuildReplay completed and both regression executables passed",
+    "selectedFailureOriginStudy": "../2026-09-20-rocmfpx-json-origin/report.md"
+  },
+  "runFinishedAt": "2026-09-20T03:26:46.447Z",
+  "finalizedAt": "2026-09-20T03:27:43.389513+00:00",
+  "serverStopped": true,
+  "serverProcessId": 37772,
+  "outcome": {
+    "requests": 240,
+    "validFinalOutputs": 240,
+    "terminalFailures": 0,
+    "firstPassValid": 238,
+    "retriedRequests": 2,
+    "additionalAttempts": 2,
+    "httpAttempts": 242,
+    "targetAchieved": true
+  },
+  "evaluationExitCode": 0,
+  "resultsSha256": "9d2096b577490741382c2e8ea77b5d462d1152ba85249a72e9343e39f1026313",
+  "concurrentActivity": "No other GPU inference; small CPU-only native regression builds, source review and report preparation during the run. Latency is an observed single-machine result, not an isolated kernel benchmark.",
+  "upstreamPullRequests": [
+    {
+      "url": "https://github.com/charlie12345/ROCmFPX/pull/114",
+      "scope": "FP64 entropy/CDF/normalizer reductions and zero-probability sampling guard; does not resolve the three quote failures alone"
+    },
+    {
+      "url": "https://github.com/charlie12345/ROCmFPX/pull/115",
+      "scope": "Preserve native server/CLI output to first EOG; remove false repetition truncation"
+    }
+  ]
+}

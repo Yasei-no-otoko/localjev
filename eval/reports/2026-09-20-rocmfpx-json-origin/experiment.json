@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-09-20T02:30:21.712728+00:00",
+  "nativeSourceRevision": "c49ebdbd5c9f01ec242369f9e7f7967855f80cba",
+  "localjevBase": "53dda9ddbca27da866ce667103be75aa627a89af",
+  "baselineArtifacts": {
+    ".runtime/rocmfpx-build/bin/llama-diffusion-replay.exe": "3bf52eda06c3d5305c3ddb669cddf4c1cf91daee532d8d05c625d247984658cf",
+    ".runtime/rocmfpx-build/bin/llama.dll": "2a2fa1b25f68469b13f0d6b0421208cf39a5cf3a790b2c41c4c90dcd1c01d351",
+    ".runtime/rocmfpx-build/bin/ggml-hip.dll": "434e7156c93d673a690f12195b7d906a12c411594231e28a495797b0cd29fad0",
+    ".runtime/rocmfpx-build/bin/llama-common.dll": "0fd23a461a106ccee8c0232af3f9495732ed9d8d2cbd0b525d4fffc2859dd811",
+    ".runtime/ROCmFPX/examples/diffusion/diffusion.cpp": "23744c7501a737141ccd6d143765632fb8b93d20d4f6d0f1ba1ef311e9777801",
+    ".runtime/ROCmFPX/examples/diffusion/diffusion-replay.cpp": "df65c82e301e1dabb9ebd947ec65eda73d65bde141b9446f082326b912395ca4"
+  },
+  "inputSha256": "fe045684e87146fe910626b65319d05a442b35f8a1629ab91797548e2ca482fb",
+  "modelFile": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX.gguf",
+  "modelSha256": "0457845b7b56fbc5c651d555eb217399cea77c12cc8efe110ecbfc00bccb8c90",
+  "inputReference": "reference.json",
+  "status": "precision-comparison-complete",
+  "baselineStartedAt": "2026-09-20T02:31:26.825597+00:00",
+  "baselineExitCode": 0,
+  "baselineFinishedAt": "2026-09-20T02:34:19.263371+00:00",
+  "fixedArtifacts": {
+    ".runtime/rocmfpx-build/bin/llama-diffusion-replay.exe": "7684b3c235c834b56c076f14df711ccf8865503d5f72e64a1706fdc6313e11a2",
+    ".runtime/rocmfpx-build/bin/llama.dll": "2a2fa1b25f68469b13f0d6b0421208cf39a5cf3a790b2c41c4c90dcd1c01d351",
+    ".runtime/rocmfpx-build/bin/ggml-hip.dll": "434e7156c93d673a690f12195b7d906a12c411594231e28a495797b0cd29fad0",
+    ".runtime/rocmfpx-build/bin/llama-common.dll": "81c8c00225ea1e11a914f2df15ab44de5c1a92576ed568a45c1f065b3b41f1c3",
+    ".runtime/ROCmFPX/examples/diffusion/diffusion.cpp": "6bb6296671fc6fe5d61547a649e7878ddb6476edb4542a9a9392b2b83ae06398",
+    ".runtime/ROCmFPX/examples/diffusion/diffusion-replay.cpp": "c43699ed60d73c748c38b8a9701b5c759c1d9e381f83d71614b73bb021485586",
+    ".runtime/ROCmFPX/examples/diffusion/diffusion-entropy.h": "8cc13bb7e5f5fb436dde834a90908792fc5f3079ab5bb148678cf4049cdfed26",
+    ".runtime/rocmfpx-build/bin/llama-server.exe": "ee0d8aec225a222cbb49087d4a74987c69c6f8eed69aedad3a469be69dc6ad0f",
+    ".runtime/rocmfpx-build/bin/test-diffusion-entropy.exe": "ffb596e5d189b67aa1e718b3315029896b4800bc952234cde38a3c90181ff0ee"
+  },
+  "fixedStartedAt": "2026-09-20T02:45:59.184073+00:00",
+  "precision-fa-onExitCode": 0,
+  "precision-fa-offExitCode": 0,
+  "fixedFinishedAt": "2026-09-20T02:48:39.003807+00:00"
+}

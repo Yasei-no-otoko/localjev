@@ -4,8 +4,9 @@
 Build the pinned ROCmFPX server for gfx1151 with an installed Windows ROCm SDK.
 .DESCRIPTION
 Requires an existing source checkout, AMD ROCm SDK, Visual Studio C++ tools,
-CMake and Ninja. Applies the repository's HTTP patches idempotently and runs
-the standalone diffusion output regression test.
+CMake and Ninja. Applies the repository's HTTP, output and entropy patches
+idempotently and runs the standalone output and entropy regression tests.
+BuildReplay also builds the diagnostic replay executable.
 Does not download dependencies or alter the installed SDK.
 #>
 [CmdletBinding()]
@@ -18,6 +19,7 @@ param(
     [string] $NinjaPath = 'ninja.exe',
     [ValidateRange(32, 1024)]
     [int] $BuildJobs = 32,
+    [switch] $BuildReplay,
     [switch] $ConfigureOnly
 )
 
@@ -55,7 +57,8 @@ $clang = Join-Path $sdk 'lib\llvm\bin\clang.exe'
 $clangCxx = Join-Path $sdk 'lib\llvm\bin\clang++.exe'
 $patches = @(
     (Join-Path $PSScriptRoot 'rocmfpx-http.patch'),
-    (Join-Path $PSScriptRoot 'rocmfpx-json-output.patch')
+    (Join-Path $PSScriptRoot 'rocmfpx-json-output.patch'),
+    (Join-Path $PSScriptRoot 'rocmfpx-entropy.patch')
 )
 foreach ($required in @(
     (Join-Path $source 'CMakeLists.txt'), $devShell, $clang, $clangCxx,
@@ -85,24 +88,23 @@ function Test-PatchApplied([string] $PatchPath) {
     finally { $ErrorActionPreference = $previousErrorAction }
 }
 
-# The output patch changes a line added by the first patch. Check the final
-# patch first so an already upgraded checkout does not reapply the first patch.
-if (Test-PatchApplied $patches[-1]) {
-    Write-Host 'ROCmFPX HTTP and JSON output patches are already applied.'
-}
-else {
-    foreach ($patch in $patches) {
-        $patchName = Split-Path -Leaf $patch
-        if (Test-PatchApplied $patch) {
-            Write-Host "$patchName is already applied."
-        }
-        else {
-            & $git -C $source apply --check $patch
-            if ($LASTEXITCODE -ne 0) { throw "$patchName conflicts with this source checkout." }
-            & $git -C $source apply $patch
-            if ($LASTEXITCODE -ne 0) { throw "Unable to apply $patchName." }
-        }
+# Later patches overlap earlier hunks. Find the newest applied stage first,
+# then apply only its remaining suffix, preserving every supported upgrade path.
+$appliedThrough = -1
+for ($index = $patches.Count - 1; $index -ge 0; $index--) {
+    if (Test-PatchApplied $patches[$index]) {
+        $appliedThrough = $index
+        Write-Host "ROCmFPX patches through $(Split-Path -Leaf $patches[$index]) are already applied."
+        break
     }
+}
+for ($index = $appliedThrough + 1; $index -lt $patches.Count; $index++) {
+    $patch = $patches[$index]
+    $patchName = Split-Path -Leaf $patch
+    & $git -C $source apply --check $patch
+    if ($LASTEXITCODE -ne 0) { throw "$patchName conflicts with this source checkout." }
+    & $git -C $source apply $patch
+    if ($LASTEXITCODE -ne 0) { throw "Unable to apply $patchName." }
 }
 
 $savedEnvironment = @{}
@@ -117,6 +119,7 @@ try {
     $env:CMAKE_BUILD_PARALLEL_LEVEL = "$BuildJobs"
     $env:PATH = "$sdk\bin;$sdk\lib\llvm\bin;$env:PATH"
     $sdkCmake = $sdk.Replace('\', '/')
+    $buildExamples = if ($BuildReplay) { 'ON' } else { 'OFF' }
     $configure = @(
         '-S', $source, '-B', $build, '-G', 'Ninja',
         "-DCMAKE_MAKE_PROGRAM=$ninja",
@@ -126,21 +129,30 @@ try {
         '-DGGML_HIP=ON', '-DGGML_HIP_FORCE_MMQ=ON', '-DGGML_HIP_ROCWMMA_FATTN=OFF',
         '-DGGML_HIP_ROCMI4_W4A4=OFF', '-DGGML_CUDA=OFF', '-DGGML_VULKAN=OFF',
         '-DGGML_STATIC=OFF', '-DGGML_BUILD_TESTS=OFF',
-        '-DLLAMA_BUILD_SERVER=ON', '-DLLAMA_BUILD_EXAMPLES=OFF', '-DLLAMA_BUILD_TESTS=ON',
+        '-DLLAMA_BUILD_SERVER=ON', "-DLLAMA_BUILD_EXAMPLES=$buildExamples", '-DLLAMA_BUILD_TESTS=ON',
         '-DLLAMA_BUILD_WEBUI=OFF', '-DLLAMA_USE_PREBUILT_WEBUI=OFF', '-DLLAMA_OPENSSL=OFF'
     )
     Write-Host "Configuring ROCmFPX $revision for gfx1151 using $sdk"
     & $cmake @configure
     if ($LASTEXITCODE -ne 0) { throw 'ROCmFPX CMake configuration failed.' }
     if ($ConfigureOnly) { return }
-    & $cmake --build $build --config Release --parallel $BuildJobs --target llama-server test-server-diffusion
+    $targets = @('llama-server', 'test-server-diffusion', 'test-diffusion-entropy')
+    if ($BuildReplay) { $targets += 'llama-diffusion-replay' }
+    & $cmake --build $build --config Release --parallel $BuildJobs --target @targets
     if ($LASTEXITCODE -ne 0) { throw 'ROCmFPX build failed.' }
     $server = Join-Path $build 'bin\llama-server.exe'
     if (-not (Test-Path -LiteralPath $server -PathType Leaf)) { throw "Build did not produce $server" }
-    $outputTest = Join-Path $build 'bin\test-server-diffusion.exe'
-    if (-not (Test-Path -LiteralPath $outputTest -PathType Leaf)) { throw "Build did not produce $outputTest" }
-    & $outputTest
-    if ($LASTEXITCODE -ne 0) { throw 'Diffusion output regression test failed.' }
+    foreach ($testName in @('test-server-diffusion', 'test-diffusion-entropy')) {
+        $testExecutable = Join-Path $build "bin\$testName.exe"
+        if (-not (Test-Path -LiteralPath $testExecutable -PathType Leaf)) { throw "Build did not produce $testExecutable" }
+        & $testExecutable
+        if ($LASTEXITCODE -ne 0) { throw "$testName regression test failed." }
+    }
+    if ($BuildReplay) {
+        $replay = Join-Path $build 'bin\llama-diffusion-replay.exe'
+        if (-not (Test-Path -LiteralPath $replay -PathType Leaf)) { throw "Build did not produce $replay" }
+        Write-Host "Built $replay"
+    }
     Write-Host "Built $server"
     Write-Host "Runtime DLL directory: $sdk\bin"
 }

@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-09-20T03:32:20.625547+00:00",
+  "runId": "2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-fa-off",
+  "status": "pass",
+  "blockingFindings": [],
+  "method": "CPU-only independent Python recomputation of all summary task/timing/paired metrics and row projections; Bun makeState/sha256 recomputation from the prepared suite; exact-byte artifact hashing; fresh Win32_Process query. No inference, builds, evaluator edits, or model-weight rehash.",
+  "evidenceSha256": {
+    "manifest.json": "74ca6eb8dd4df8d381d0bb7773e08437c97e53f9d0fdf27470dbe8cb578bce16",
+    "runtime.json": "90bfee2526f72f752d1a91fb6d0ec58e2d58e705d23c2ce37141349c15da3821",
+    "results.jsonl": "9d2096b577490741382c2e8ea77b5d462d1152ba85249a72e9343e39f1026313",
+    "warmups.jsonl": "3705237f87f540af4560f5731c639dffda732c80af58cc93a4073b0dc752fa28",
+    "summary.json": "bf9435c599f0beb43f065e5561db225b237880980252355f5a8c1b8bd9b26915",
+    "report.md": "8226732093ee9cd24eceee7cc1dd76fe9216313cfba5a38278f3f8eb43b61143"
+  },
+  "coverage": {
+    "measuredRows": 240,
+    "uniqueKeys": 240,
+    "examples": 120,
+    "cells": {
+      "ag_news:0": 40,
+      "ag_news:2048": 40,
+      "boolq:2048": 40,
+      "boolq:0": 40,
+      "sst5:0": 40,
+      "sst5:2048": 40
+    },
+    "singleExpectedModel": true,
+    "orderedCoverageMatchesBothReferences": true,
+    "jsonObjectsHaveUniqueKeys": true,
+    "noNulOrPartialJsonl": true,
+    "lockAbsent": true
+  },
+  "outcome": {
+    "requests": 240,
+    "validFinalOutputs": 240,
+    "terminalFailures": 0,
+    "firstPassValid": 238,
+    "retriedRequests": 2,
+    "additionalAttempts": 2,
+    "httpAttempts": 242,
+    "targetAchieved": true
+  },
+  "http": {
+    "measuredStatuses": {
+      "200": 242
+    },
+    "warmupStatuses": {
+      "200": 2
+    },
+    "maxConfiguredRetries": 2,
+    "maxObservedAttempts": 2,
+    "warmups": 2,
+    "warmupsValid": 2,
+    "retriedKeys": [
+      "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX|0|sst5:test:649",
+      "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX|0|sst5:test:513"
+    ],
+    "allMeasuredFinishReasonsStop": true,
+    "lengthLimitedAttempts": 0
+  },
+  "answerValidation": {
+    "all240EngineFinalOk": true,
+    "allProbabilitiesFiniteBoundedNormalized": true,
+    "answerToRowProjectionMatches": true,
+    "allPredictionsMatchAnswerRules": true,
+    "scoreEqualsProbabilityExpectation": true,
+    "goldAndLabelsMatchReference": true
+  },
+  "metrics": {
+    "allSummaryTaskTimingAndPairedFieldsRecomputed": true,
+    "comparedFieldsIncludingContainers": 269,
+    "maximumAbsoluteFloatDifference": 8.881784197001252e-16,
+    "tolerance": {
+      "absolute": 1e-10,
+      "relative": 1e-12
+    },
+    "accuracy": {
+      "short": {
+        "correct": 87,
+        "total": 120,
+        "macroAccuracy": 0.725,
+        "perTaskCorrect": {
+          "ag_news": 35,
+          "boolq": 33,
+          "sst5": 19
+        }
+      },
+      "long": {
+        "correct": 84,
+        "total": 120,
+        "macroAccuracy": 0.7000000000000001,
+        "perTaskCorrect": {
+          "ag_news": 35,
+          "boolq": 34,
+          "sst5": 15
+        }
+      },
+      "overall": {
+        "correct": 171,
+        "total": 240,
+        "accuracy": 0.7125
+      }
+    },
+    "paired": {
+      "backgroundWords": 2048,
+      "bothValid": 120,
+      "predictionsChanged": 22,
+      "correctToWrong": 10,
+      "wrongToCorrect": 7
+    }
+  },
+  "comparability": {
+    "original": {
+      "run": "2026-09-18-bakeoff",
+      "stateAndExampleMatches": 240,
+      "orderedInputManifestMatches": 120,
+      "sourcesMatch": 4,
+      "suiteHashMatches": true,
+      "nonModelConfigMatches": true,
+      "differentNonce": true
+    },
+    "previous": {
+      "run": "2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-json-fixed",
+      "stateAndExampleMatches": 240,
+      "orderedInputManifestMatches": 120,
+      "sourcesMatch": 4,
+      "suiteHashMatches": true,
+      "nonModelConfigMatches": true,
+      "differentNonce": true
+    }
+  },
+  "freshSuiteReconstruction": {
+    "inputs": 120,
+    "states": 240,
+    "suiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859"
+  },
+  "evaluationCodeParity": {
+    "src/engine.ts": {
+      "rawSha256": "761095ee4addd176cec1ca657dd438e107229dd83b9c063a5b0c56cc6dc0381d",
+      "lfSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    },
+    "src/types.ts": {
+      "rawSha256": "2c53ab73368b884f0e08d78dfd9eebdb67aba78d5287be9b1253f82d2893b044",
+      "lfSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    },
+    "src/config.ts": {
+      "rawSha256": "66b37cd1c34557c999939bc0ea54cb8f80bebf1b6ab2bcbb95868ae8b6ee4f55",
+      "lfSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    },
+    "bun.lock": {
+      "rawSha256": "7348addb921966e73d46c2133343fd0169c65a8d3bb15b5240cb0ae644c5cd60",
+      "lfSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    },
+    "scripts/eval/common.ts": {
+      "rawSha256": "c87b7420a99110e8cd82fe8bc32d1b1d5ff6eed4c88edd69203a14a45e4dfa41",
+      "lfSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    },
+    "scripts/eval/data.ts": {
+      "rawSha256": "d2af318f435c749c13630b076356d864b63344fcd56529568db7935789d3e9ab",
+      "lfSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    },
+    "scripts/eval/run.ts": {
+      "rawSha256": "495b3701517c4a3c46f5e49753f0d920ad7707f84ff9cbce40543825cbaf219c",
+      "lfSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "matchesCurrentManifestAndPrevious": true,
+      "matchesOriginalAfterLfNormalization": true
+    }
+  },
+  "reportCodeHashes": {
+    "scripts/eval/report.ts": "18db80bdb6d75581e381599c8fb537138930956bf439388b42b131629aadbbb2",
+    "scripts/eval/metrics.ts": "b6961a695832105c0818ffbc27477e39c63bb13d4ca49eda572c517f0d0b85ba"
+  },
+  "runtimeArtifactHashesVerified": {
+    "scripts/build-rocmfpx.ps1": "e299f2c22121cb22c17f7650dedbbc47e5cb59897bab80916de8ca139ddd07e9",
+    "scripts/rocmfpx-http.patch": "1e0cb3dde30cd4e9f4d52ce8b9546fa14f0060ecb508c6a2fdb65aa4b32a8a17",
+    ".runtime/rocmfpx-build/bin/llama-server.exe": "c1fd37f3e878cddc0034350ca94c6016318756a3a6d0783149136efb0eaa559a",
+    ".runtime/rocmfpx-build/bin/llama.dll": "2a2fa1b25f68469b13f0d6b0421208cf39a5cf3a790b2c41c4c90dcd1c01d351",
+    ".runtime/rocmfpx-build/bin/ggml-hip.dll": "434e7156c93d673a690f12195b7d906a12c411594231e28a495797b0cd29fad0",
+    "scripts/eval/annotate-windows.ps1": "4e63421cffef880fcde2f738345a28ad85a2480bc62cf50bb93db431ac676a48",
+    "scripts/rocmfpx-json-output.patch": "7e485a09eccd3f679dc67c88150c45adbe432451f3538192b6e8710443a1350c",
+    ".runtime/rocmfpx-build/bin/llama-common.dll": "a90730c83b1a1ee3056baa44ff3ad995a2d3fa6f87e27abd8f41420eb8fb9418",
+    ".runtime/rocmfpx-build/bin/test-server-diffusion.exe": "2ebd2f03e246f3b5ec875cfacd60359436fdec849ac0b1ef59aa24bce06cc1af",
+    "scripts/rocmfpx-entropy.patch": "0babd0ac2a81b2972a5b4329e56fcd51769a1713464704bb088a55d6fac5e858",
+    ".runtime/rocmfpx-build/bin/test-diffusion-entropy.exe": "ffb596e5d189b67aa1e718b3315029896b4800bc952234cde38a3c90181ff0ee"
+  },
+  "runtimeValidation": {
+    "completeExitZero": true,
+    "resultsHashMatches": true,
+    "modelHashMatchesPriorRecordedStandardModel": true,
+    "freshModelWeightHashPerformed": false,
+    "faDisabledAndPrefixCacheEnabledInRecordedArgs": true,
+    "startupEvidenceFaDisabledAnd31Of31LayersGpu": true,
+    "windowsEnvironmentConsistent": true,
+    "originalProbesPreserved": true,
+    "recordedServerPid": 37772,
+    "freshProcessQueryFoundPidOrAnyLlamaServer": []
+  },
+  "limits": [
+    "Final output validity after up to two retries is distinct from gold correctness.",
+    "240/240 applies to this measured suite/run, not a guarantee for unseen inputs.",
+    "Fresh nonce, entropy patch and backend setting changes prevent attributing the full-run improvement to FA alone.",
+    "Runtime launch/startup statements are recorded evidence; the server was stopped and no GPU calls were made during this audit."
+  ]
+}

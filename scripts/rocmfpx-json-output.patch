@@ -1,0 +1,204 @@
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -1,5 +1,6 @@
+ 
+ #include "server-context.h"
++#include "server-diffusion.h"
+ #include "server-chat.h"
+ #include "server-common.h"
+ #include "server-http.h"
+@@ -61,7 +62,7 @@
+             throw std::invalid_argument("response_format.json_schema.schema must be an object");
+         }
+         instruction = "Return only JSON matching this schema, with no explanation or markdown:\n" +
+-                format.at("json_schema").at("schema").dump();
++                server_diffusion_schema_json(format.at("json_schema").at("schema").dump());
+     } else if (type == "json_object") {
+         instruction = "Return only a JSON object, with no explanation or markdown.";
+     } else if (type != "text") {
+@@ -3882,30 +3883,6 @@
+ 
+         const bool use_eb = params_base.diffusion.eb_mode != 2;
+ 
+-        auto trim_canvas = [&](const llama_token * canvas, size_t n) -> size_t {
+-            size_t cut = n;
+-            for (size_t i = 0; i < n; i++) {
+-                if (llama_vocab_is_eog(vocab, canvas[i])) {
+-                    cut = i;
+-                    break;
+-                }
+-            }
+-            for (size_t i = 0; i + 1 < cut; i++) {
+-                bool loop = false;
+-                for (size_t stride = 1; stride <= 2 && !loop; stride++) {
+-                    size_t reps = 0;
+-                    for (size_t j = i; j + stride < n && canvas[j] == canvas[j + stride]; j += stride) {
+-                        reps++;
+-                    }
+-                    loop = reps >= 6;
+-                }
+-                if (loop) {
+-                    cut = i;
+-                    break;
+-                }
+-            }
+-            return cut;
+-        };
+ 
+         llama_tokens prefix = common_tokenize(vocab, formatted_prompt, true, true);
+         if ((uint32_t) prefix.size() >= llama_n_ctx(ctx_tgt)) {
+@@ -3959,7 +3936,8 @@
+             }
+ 
+             const llama_token * canvas = output_tokens.data() + prefix_len;
+-            const size_t cut = trim_canvas(canvas, (size_t) canvas_length);
++            const size_t cut = server_diffusion_output_length(canvas, (size_t) canvas_length,
++                    [&](llama_token token) { return llama_vocab_is_eog(vocab, token); });
+             response_tokens.insert(response_tokens.end(), canvas, canvas + cut);
+             hit_token_limit = n_predict > 0 && (int32_t) response_tokens.size() >= n_predict;
+             if (cut < (size_t) canvas_length || hit_token_limit) {
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -115,6 +115,10 @@
+ 
+     set_property(TEST ${TEST_TARGET} PROPERTY LABELS ${LLAMA_TEST_LABEL})
+ endfunction()
++
++# This header-only output policy test needs neither model weights nor a backend.
++add_executable(test-server-diffusion test-server-diffusion.cpp)
++llama_test(test-server-diffusion)
+ 
+ # build test-tokenizer-0 target once and add many tests
+ llama_build(test-tokenizer-0.cpp)
+diff --git a/tools/server/server-diffusion.h b/tools/server/server-diffusion.h
+new file mode 100644
+--- /dev/null
++++ b/tools/server/server-diffusion.h
+@@ -0,0 +1,42 @@
++#pragma once
++
++#include <cstddef>
++#include <string>
++
++// Match the readable JSON separators used by the Transformers adapter while
++// preserving every character inside strings. Input is a valid compact JSON dump.
++inline std::string server_diffusion_schema_json(const std::string & compact) {
++    std::string result;
++    result.reserve(compact.size());
++    bool in_string = false;
++    bool escaped = false;
++    for (char c : compact) {
++        result += c;
++        if (in_string) {
++            if (escaped) {
++                escaped = false;
++            } else if (c == '\\') {
++                escaped = true;
++            } else if (c == '"') {
++                in_string = false;
++            }
++        } else if (c == '"') {
++            in_string = true;
++        } else if (c == ':' || c == ',') {
++            result += ' ';
++        }
++    }
++    return result;
++}
++
++// Repeated tokens can be meaningful text, including JSON numbers. Only an
++// end-of-generation token may shorten a decoded canvas here.
++template <typename Token, typename IsEog>
++std::size_t server_diffusion_output_length(const Token * canvas, std::size_t n, IsEog is_eog) {
++    for (std::size_t i = 0; i < n; ++i) {
++        if (is_eog(canvas[i])) {
++            return i;
++        }
++    }
++    return n;
++}
+diff --git a/tests/test-server-diffusion.cpp b/tests/test-server-diffusion.cpp
+new file mode 100644
+--- /dev/null
++++ b/tests/test-server-diffusion.cpp
+@@ -0,0 +1,78 @@
++#include "../tools/server/server-diffusion.h"
++
++#include <cstdint>
++#include <cstdio>
++#include <cstdlib>
++#include <vector>
++
++static void check(const char * name, const std::vector<int32_t> & canvas, std::size_t n, std::size_t expected) {
++    std::size_t inspected = 0;
++    const auto length = server_diffusion_output_length(canvas.data(), n, [&](int32_t token) {
++        ++inspected;
++        return token == 106 || token == 1;
++    });
++    const auto expected_inspected = expected < n ? expected + 1 : n;
++    if (length != expected || inspected != expected_inspected) {
++        std::fprintf(stderr, "%s: length %zu (expected %zu), inspected %zu (expected %zu)\n",
++                     name, length, expected, inspected, expected_inspected);
++        std::exit(EXIT_FAILURE);
++    }
++}
++
++static void check_schema(const char * name, const std::string & compact, const std::string & expected) {
++    const auto actual = server_diffusion_schema_json(compact);
++    if (actual != expected) {
++        std::fprintf(stderr, "%s: unexpected schema serialization\nexpected: %s\nactual: %s\n",
++                     name, expected.c_str(), actual.c_str());
++        std::exit(EXIT_FAILURE);
++    }
++}
++
++int main() {
++    check_schema("nested schema", R"({"type":"object","properties":{"q1":{"type":"array","items":{"type":"number"},"minItems":5,"maxItems":5}},"required":["q1"],"additionalProperties":false})",
++                 R"({"type": "object", "properties": {"q1": {"type": "array", "items": {"type": "number"}, "minItems": 5, "maxItems": 5}}, "required": ["q1"], "additionalProperties": false})");
++    check_schema("punctuation inside strings", R"({"a,b:c":"x:y,z","array":["a,b",{"c:d":"e,f"}]})",
++                 R"({"a,b:c": "x:y,z", "array": ["a,b", {"c:d": "e,f"}]})");
++    check_schema("escaped quotes and backslashes", R"({"a\"b":"quote\",comma:colon","slash":"\\","odd":"\\\"x,y:z","even":"\\\\","after":0})",
++                 R"({"a\"b": "quote\",comma:colon", "slash": "\\", "odd": "\\\"x,y:z", "even": "\\\\", "after": 0})");
++    check_schema("Unicode and control escapes", R"({"雪":"😀,:","escaped":"\u96ea\n\r\t\b\f\\\/","n":-1.25e-4})",
++                 R"({"雪": "😀,:", "escaped": "\u96ea\n\r\t\b\f\\\/", "n": -1.25e-4})");
++    check_schema("empty structures", R"({"object":{},"array":[],"string":""})",
++                 R"({"object": {}, "array": [], "string": ""})");
++    check_schema("empty input", "", "");
++
++    // Native DiffusionGemma tokenization of:
++    // <|channel>thought\n<channel|>{"answers":{"q1":[0.0,0.0,0.0,0.95,0.05]}}
++    // Zeros repeat at every other position from index 10 through 22, while
++    // intervening dots and commas differ. The old repetition heuristic cut at 10.
++    const std::vector<int32_t> json = {
++        100, 45518, 107, 101, 14937, 53821, 68693, 236809, 236770, 89045,
++        236771, 236761, 236771, 236764, 236771, 236761, 236771, 236764,
++        236771, 236761, 236771, 236764, 236771, 236761, 236819, 236810,
++        236764, 236771, 236761, 236771, 236810, 236842, 1807,
++    };
++    check("compact JSON without EOG", json, json.size(), 33);
++    auto terminated_json = json;
++    terminated_json.insert(terminated_json.end(), {106, 50, 50, 50, 50, 50, 50, 50});
++    check("compact JSON with EOG and trailing garbage", terminated_json, terminated_json.size(), 33);
++
++    check("repeated decimal digits", {236771, 236761, 236771, 236771, 236771, 236771,
++                                     236771, 236771, 236771, 236771}, 10, 10);
++    check("repeated two-token sequence", {50, 51, 50, 51, 50, 51, 50, 51,
++                                           50, 51, 50, 51, 50, 51}, 14, 14);
++    check("EOG first", {106, 50, 51}, 3, 0);
++    check("alternative EOG first", {1, 106, 50}, 3, 0);
++    check("EOG last", {50, 51, 106}, 3, 2);
++    check("first of multiple EOG tokens", {50, 106, 51, 1}, 4, 1);
++    check("repetitions extending beyond EOG", {50, 106, 50, 106, 50, 106, 50, 106,
++                                             50, 106, 50, 106, 50, 106}, 14, 1);
++    check("empty canvas", {}, 0, 0);
++
++    // The caller owns max_tokens enforcement. This helper reads only its supplied
++    // canvas span and does not infer a stopping point from repeated content.
++    check("bounded span excludes later EOG", terminated_json, 10, 10);
++    check("EOG immediately outside span", terminated_json, 33, 33);
++    check("EOG at span boundary", terminated_json, 34, 33);
++    check("zero span with backing tokens", terminated_json, 0, 0);
++    std::puts("server diffusion output tests passed");
++}

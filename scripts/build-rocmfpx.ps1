@@ -4,7 +4,8 @@
 Build the pinned ROCmFPX server for gfx1151 with an installed Windows ROCm SDK.
 .DESCRIPTION
 Requires an existing source checkout, AMD ROCm SDK, Visual Studio C++ tools,
-CMake and Ninja. Applies the repository's HTTP compatibility patch idempotently.
+CMake and Ninja. Applies the repository's HTTP patches idempotently and runs
+the standalone diffusion output regression test.
 Does not download dependencies or alter the installed SDK.
 #>
 [CmdletBinding()]
@@ -52,15 +53,18 @@ $git = Resolve-BuildTool 'git.exe'
 $devShell = Join-Path (Resolve-LocalPath $VisualStudioPath) 'Common7\Tools\Launch-VsDevShell.ps1'
 $clang = Join-Path $sdk 'lib\llvm\bin\clang.exe'
 $clangCxx = Join-Path $sdk 'lib\llvm\bin\clang++.exe'
-$patch = Join-Path $PSScriptRoot 'rocmfpx-http.patch'
+$patches = @(
+    (Join-Path $PSScriptRoot 'rocmfpx-http.patch'),
+    (Join-Path $PSScriptRoot 'rocmfpx-json-output.patch')
+)
 foreach ($required in @(
-    (Join-Path $source 'CMakeLists.txt'), $devShell, $clang, $clangCxx, $patch,
+    (Join-Path $source 'CMakeLists.txt'), $devShell, $clang, $clangCxx,
     (Join-Path $sdk 'include\hip\hip_runtime.h'),
     (Join-Path $sdk 'lib\cmake\hip\hip-config.cmake'),
     (Join-Path $sdk 'lib\cmake\hipblas\hipblas-config.cmake'),
     (Join-Path $sdk 'lib\cmake\rocblas\rocblas-config.cmake'),
     (Join-Path $sdk 'lib\llvm\amdgcn\bitcode\oclc_abi_version_400.bc')
-)) {
+) + $patches) {
     if (-not (Test-Path -LiteralPath $required -PathType Leaf)) { throw "Required build input missing: $required" }
 }
 if ($source.TrimEnd('\') -eq $build.TrimEnd('\')) { throw 'Use a separate build directory.' }
@@ -71,21 +75,34 @@ if ($LASTEXITCODE -ne 0 -or "$actualRevision".Trim() -ne $revision) {
 
 # A failed reverse check is expected on a fresh checkout. PowerShell 5.1 treats
 # native stderr as an error even when it is redirected, so handle that probe.
-$previousErrorAction = $ErrorActionPreference
-try {
-    $ErrorActionPreference = 'Continue'
-    & $git -C $source apply --reverse --check --quiet $patch 2>$null
-    $patchApplied = $LASTEXITCODE -eq 0
+function Test-PatchApplied([string] $PatchPath) {
+    $previousErrorAction = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        & $git -C $source apply --reverse --check --quiet $PatchPath 2>$null
+        return $LASTEXITCODE -eq 0
+    }
+    finally { $ErrorActionPreference = $previousErrorAction }
 }
-finally { $ErrorActionPreference = $previousErrorAction }
-if ($patchApplied) {
-    Write-Host 'ROCmFPX HTTP compatibility patch is already applied.'
+
+# The output patch changes a line added by the first patch. Check the final
+# patch first so an already upgraded checkout does not reapply the first patch.
+if (Test-PatchApplied $patches[-1]) {
+    Write-Host 'ROCmFPX HTTP and JSON output patches are already applied.'
 }
 else {
-    & $git -C $source apply --check $patch
-    if ($LASTEXITCODE -ne 0) { throw 'The HTTP compatibility patch conflicts with this source checkout.' }
-    & $git -C $source apply $patch
-    if ($LASTEXITCODE -ne 0) { throw 'Unable to apply the HTTP compatibility patch.' }
+    foreach ($patch in $patches) {
+        $patchName = Split-Path -Leaf $patch
+        if (Test-PatchApplied $patch) {
+            Write-Host "$patchName is already applied."
+        }
+        else {
+            & $git -C $source apply --check $patch
+            if ($LASTEXITCODE -ne 0) { throw "$patchName conflicts with this source checkout." }
+            & $git -C $source apply $patch
+            if ($LASTEXITCODE -ne 0) { throw "Unable to apply $patchName." }
+        }
+    }
 }
 
 $savedEnvironment = @{}
@@ -109,17 +126,21 @@ try {
         '-DGGML_HIP=ON', '-DGGML_HIP_FORCE_MMQ=ON', '-DGGML_HIP_ROCWMMA_FATTN=OFF',
         '-DGGML_HIP_ROCMI4_W4A4=OFF', '-DGGML_CUDA=OFF', '-DGGML_VULKAN=OFF',
         '-DGGML_STATIC=OFF', '-DGGML_BUILD_TESTS=OFF',
-        '-DLLAMA_BUILD_SERVER=ON', '-DLLAMA_BUILD_EXAMPLES=OFF', '-DLLAMA_BUILD_TESTS=OFF',
+        '-DLLAMA_BUILD_SERVER=ON', '-DLLAMA_BUILD_EXAMPLES=OFF', '-DLLAMA_BUILD_TESTS=ON',
         '-DLLAMA_BUILD_WEBUI=OFF', '-DLLAMA_USE_PREBUILT_WEBUI=OFF', '-DLLAMA_OPENSSL=OFF'
     )
     Write-Host "Configuring ROCmFPX $revision for gfx1151 using $sdk"
     & $cmake @configure
     if ($LASTEXITCODE -ne 0) { throw 'ROCmFPX CMake configuration failed.' }
     if ($ConfigureOnly) { return }
-    & $cmake --build $build --config Release --parallel $BuildJobs --target llama-server
+    & $cmake --build $build --config Release --parallel $BuildJobs --target llama-server test-server-diffusion
     if ($LASTEXITCODE -ne 0) { throw 'ROCmFPX build failed.' }
     $server = Join-Path $build 'bin\llama-server.exe'
     if (-not (Test-Path -LiteralPath $server -PathType Leaf)) { throw "Build did not produce $server" }
+    $outputTest = Join-Path $build 'bin\test-server-diffusion.exe'
+    if (-not (Test-Path -LiteralPath $outputTest -PathType Leaf)) { throw "Build did not produce $outputTest" }
+    & $outputTest
+    if ($LASTEXITCODE -ne 0) { throw 'Diffusion output regression test failed.' }
     Write-Host "Built $server"
     Write-Host "Runtime DLL directory: $sdk\bin"
 }

@@ -1,0 +1,969 @@
+{
+  "backend": {
+    "name": "ROCmFPX",
+    "source": "https://github.com/charlie12345/ROCmFPX",
+    "revision": "c49ebdbd5c9f01ec242369f9e7f7967855f80cba",
+    "device": "ROCm0",
+    "gpu": "AMD Radeon(TM) 8060S Graphics",
+    "targetArchitecture": "gfx1151",
+    "structuredOutput": "prompt_only",
+    "perRequestSeed": true,
+    "kvCacheBetweenRequests": "cleared",
+    "decoder": "diffusion_generate_entropy_bound",
+    "schedule": {
+      "maxDenoisingSteps": 48,
+      "tMin": 0.4,
+      "tMax": 0.8,
+      "entropyBound": 0.1,
+      "stabilityThreshold": 1,
+      "confidenceThreshold": 0.005,
+      "canvasTokens": 256
+    },
+    "temperatureNote": "The evaluator requests temperature=0; the native entropy-bound decoder uses its original temperature schedule instead.",
+    "launchArguments": [
+      "-m",
+      ".runtime/models/diffusiongemma-rocmfpx-q8/diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX.gguf",
+      "--alias",
+      "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8001",
+      "-dev",
+      "ROCm0",
+      "-ngl",
+      "999",
+      "-fa",
+      "on",
+      "-np",
+      "1",
+      "-c",
+      "8192",
+      "-b",
+      "8192",
+      "-ub",
+      "8192",
+      "-n",
+      "256",
+      "--seed",
+      "20260918",
+      "--jinja",
+      "-t",
+      "16",
+      "-tb",
+      "16",
+      "--no-warmup",
+      "--cache-ram",
+      "0",
+      "-fit",
+      "off",
+      "-lv",
+      "4"
+    ],
+    "startupEvidence": [
+      "0.07.561.963 I load_tensors: offloaded 31/31 layers to GPU",
+      "0.07.561.976 I load_tensors:   CPU_Mapped model buffer size =   748.00 MiB",
+      "0.07.561.979 I load_tensors:        ROCm0 model buffer size = 24888.46 MiB",
+      "0.24.390.652 I sched_reserve:      ROCm0 compute buffer size =  8453.25 MiB",
+      "0.24.390.663 I sched_reserve:  ROCm_Host compute buffer size =   432.09 MiB",
+      "0.24.391.064 I slot   load_model: id  0 | task -1 | new slot, n_ctx = 8192"
+    ],
+    "patches": [
+      "scripts/rocmfpx-http.patch",
+      "scripts/rocmfpx-json-output.patch"
+    ],
+    "outputPolicy": "Preserve complete canvas content until first EOG or requested token limit; no repetition heuristic.",
+    "schemaSerialization": "Readable separators matching Python json.dumps(schema, ensure_ascii=False) for the Engine schema; preserves strings and insertion order."
+  },
+  "model": {
+    "source": "kingjones777/DiffusionGemma-26B-A4B-it-ROCmFP4-GGUF",
+    "revision": "2eeff1460e24a0cf45fb98f0def57099c57823fc",
+    "file": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX.gguf",
+    "bytes": 26113166432,
+    "sha256": "0457845b7b56fbc5c651d555eb217399cea77c12cc8efe110ecbfc00bccb8c90",
+    "architecture": "diffusion-gemma",
+    "fileType": 111,
+    "tensorCount": 692,
+    "tensorTypes": {
+      "F32": 423,
+      "Q8_0_ROCMFPX": 268,
+      "Q8_0": 1
+    },
+    "metadataComparisonToAgent": {
+      "tokenizerCanonicalJsonSha256": "f78382c53919bf8497f6b99098e04440089d8719753b91142b1da480520f1f3f",
+      "chatTemplateSha256": "2f1b4d75d067bae3fe44e676721c7f077d243bc007156cb9c2f8b5836613d082",
+      "chatTemplateCharacters": 17336,
+      "tokenizerIdentical": true,
+      "chatTemplateIdentical": true,
+      "nonTokenizerMetadataDifferences": [
+        "general.file_type"
+      ],
+      "entropyBoundMetadataOverrides": false,
+      "note": "Read-only GGUFReader field.contents() values. Tokenizer hash covers tokenizer.* except tokenizer.chat_template using json.dumps(ensure_ascii=False, sort_keys=True, separators=(comma,colon)), UTF-8; arrays retain order. Chat template is hashed separately as exact UTF-8 text."
+    }
+  },
+  "machine": {
+    "version": "10.0.26200",
+    "cpu": "AMD RYZEN AI MAX+ 395 w/ Radeon 8060S",
+    "os": "Microsoft Windows 11 Pro",
+    "logicalProcessors": 32,
+    "visibleMemoryGiB": 119.647,
+    "cores": 16
+  },
+  "build": {
+    "platform": "Windows AMD64",
+    "compiler": "AMD Clang 24.0.0",
+    "hip": "7.16.26362",
+    "msvc": "14.44.35207",
+    "jobs": 32,
+    "GGML_HIP": true,
+    "GGML_HIP_FORCE_MMQ": true,
+    "GGML_HIP_ROCWMMA_FATTN": false,
+    "GGML_HIP_ROCMI4_W4A4": false,
+    "gpuTargets": [
+      "gfx1151"
+    ]
+  },
+  "evaluationCodeParity": {
+    "src/engine.ts": {
+      "rawSha256": "761095ee4addd176cec1ca657dd438e107229dd83b9c063a5b0c56cc6dc0381d",
+      "lfSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "baselineSha256": "74b2c583cf5776d7b8f2fece99e02f98bd7c71eb12be548f2fe0b6f944bb0c4f",
+      "matchesAfterLfNormalization": true
+    },
+    "src/types.ts": {
+      "rawSha256": "2c53ab73368b884f0e08d78dfd9eebdb67aba78d5287be9b1253f82d2893b044",
+      "lfSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "baselineSha256": "850eb1603808ae92c3db2d43dee77e2b62b5de8860edb34196c5a9107f69b8bc",
+      "matchesAfterLfNormalization": true
+    },
+    "src/config.ts": {
+      "rawSha256": "66b37cd1c34557c999939bc0ea54cb8f80bebf1b6ab2bcbb95868ae8b6ee4f55",
+      "lfSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "baselineSha256": "6338dc551151112ea7a7036e02a7b9b1ce36580ff987681380783dd4d72e5dd6",
+      "matchesAfterLfNormalization": true
+    },
+    "bun.lock": {
+      "rawSha256": "7348addb921966e73d46c2133343fd0169c65a8d3bb15b5240cb0ae644c5cd60",
+      "lfSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "baselineSha256": "450b2b5349f3046dd62bf8fda65d6b68abf093f79d09927c848350de14e47840",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/common.ts": {
+      "rawSha256": "c87b7420a99110e8cd82fe8bc32d1b1d5ff6eed4c88edd69203a14a45e4dfa41",
+      "lfSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "baselineSha256": "049f6edb9b105b671ec76851ade44422b99685810a3f65e388928f62f3a98bfe",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/data.ts": {
+      "rawSha256": "d2af318f435c749c13630b076356d864b63344fcd56529568db7935789d3e9ab",
+      "lfSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "baselineSha256": "14b40736b2dfdd8ee7a9ec6ea1bda81369606a6c3672ce16dfaa3f0fb6a7783a",
+      "matchesAfterLfNormalization": true
+    },
+    "scripts/eval/run.ts": {
+      "rawSha256": "495b3701517c4a3c46f5e49753f0d920ad7707f84ff9cbce40543825cbaf219c",
+      "lfSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "baselineSha256": "58195ae1cd7a3c4b1556052abcc0c71a1f15872a47a04b3b3fa2e2001cc9d044",
+      "matchesAfterLfNormalization": true
+    }
+  },
+  "evaluationCodeParityNote": "Windows CRLF causes raw byte hash differences; all seven inference/evaluation files match the reference after LF normalization. Report presentation alone supports backend names and manifest notes.",
+  "recordedAt": "2026-09-20T02:12:55.826755+00:00",
+  "status": "complete",
+  "runStartedAt": "2026-09-20T01:31:19.336Z",
+  "referenceRun": "2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-standard",
+  "artifactSha256": {
+    "scripts/build-rocmfpx.ps1": "baf5de5f11c86ff7d09bbb70e58874cf8756f3b1d6888fb5bcf171450ee6788c",
+    "scripts/rocmfpx-http.patch": "1e0cb3dde30cd4e9f4d52ce8b9546fa14f0060ecb508c6a2fdb65aa4b32a8a17",
+    ".runtime/rocmfpx-build/bin/llama-server.exe": "cb983a461b4fc9d4d8b9ba9957ab022b9f5d0249cfde2c5f4a52e914e2f9a928",
+    ".runtime/rocmfpx-build/bin/llama.dll": "2a2fa1b25f68469b13f0d6b0421208cf39a5cf3a790b2c41c4c90dcd1c01d351",
+    ".runtime/rocmfpx-build/bin/ggml-hip.dll": "434e7156c93d673a690f12195b7d906a12c411594231e28a495797b0cd29fad0",
+    "scripts/eval/annotate-windows.ps1": "4e63421cffef880fcde2f738345a28ad85a2480bc62cf50bb93db431ac676a48",
+    "scripts/rocmfpx-json-output.patch": "7e485a09eccd3f679dc67c88150c45adbe432451f3538192b6e8710443a1350c",
+    ".runtime/rocmfpx-build/bin/llama-common.dll": "faef8918edb4177dcc37e26b83336056a5b8b4d455ac48bc715deb276af961b2",
+    ".runtime/rocmfpx-build/bin/test-server-diffusion.exe": "2ebd2f03e246f3b5ec875cfacd60359436fdec849ac0b1ef59aa24bce06cc1af"
+  },
+  "comparability": {
+    "sameConfig": true,
+    "suiteHash": "3a6156e3b229d06d77791ade8d3112a08b174fa1df912139ac448115796a3859",
+    "orderedExamplesVerified": 120,
+    "sameRawEvaluatorCodeHashes": true,
+    "unchangedCoreLibraries": [
+      "llama.dll",
+      "ggml-hip.dll"
+    ],
+    "differences": [
+      "EOS-only output trimming replaces false repetition cutoff",
+      "Schema separators match FP16 adapter",
+      "New cache-busting nonce for full evaluation"
+    ],
+    "stateHashAudit": {
+      "verified": 240,
+      "matchesPreviousStandard": true,
+      "matchesAgent": true,
+      "matchesOriginalBakeoffDiffusionGemma": true
+    }
+  },
+  "validation": {
+    "nativeRegressionCases": 20,
+    "nativeBuild": "7 steps; 32 parallel jobs; passed",
+    "freshPatchAndUpgrade": "Fresh old-then-new patch and old-only upgrade passed; second invocation leaves all four patched files unchanged.",
+    "http": {
+      "recordedAt": "2026-09-20T01:27:55.145469+00:00",
+      "scope": "CPU HTTP template formatting and invalid input validation only. No valid generation request sent.",
+      "baseURL": "http://127.0.0.1:8001",
+      "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX-diagnostic",
+      "executableSHA256": "cb983a461b4fc9d4d8b9ba9957ab022b9f5d0249cfde2c5f4a52e914e2f9a928",
+      "expectedExecutableMatches": true,
+      "health": {
+        "status": 200,
+        "seconds": 0.35073750000447035,
+        "body": {
+          "status": "ok"
+        }
+      },
+      "schemaFixtures": [
+        {
+          "name": "nested",
+          "status": 200,
+          "seconds": 0.017422199998691212,
+          "expectedPythonSerialization": "{\"type\": \"object\", \"properties\": {\"answers\": {\"type\": \"object\", \"properties\": {\"q1\": {\"type\": \"array\", \"items\": {\"type\": \"number\", \"minimum\": 0, \"maximum\": 1}, \"minItems\": 5, \"maxItems\": 5}}, \"required\": [\"q1\"], \"additionalProperties\": false}}, \"required\": [\"answers\"], \"additionalProperties\": false}",
+          "actualSchema": "{\"type\": \"object\", \"properties\": {\"answers\": {\"type\": \"object\", \"properties\": {\"q1\": {\"type\": \"array\", \"items\": {\"type\": \"number\", \"minimum\": 0, \"maximum\": 1}, \"minItems\": 5, \"maxItems\": 5}}, \"required\": [\"q1\"], \"additionalProperties\": false}}, \"required\": [\"answers\"], \"additionalProperties\": false}",
+          "exactSerializationMatch": true,
+          "parsedEqual": true
+        },
+        {
+          "name": "unicode_escaped",
+          "status": 200,
+          "seconds": 0.01596570000401698,
+          "expectedPythonSerialization": "{\"type\": \"object\", \"description\": \"日本語😀,comma:colon \\\"quote\\\" \\\\\\\\ backslash\\nnew line\", \"properties\": {\"a,b:c\": {\"type\": \"string\", \"enum\": [\"雪😀\", \"a:b,c\", \"quote\\\",colon:comma,\", \"odd\\\\\\\"x,y:z\", \"even\\\\\\\\\", \"\\\\u96ea\\n\\r\\t\\b\\f/\"]}}, \"required\": [\"a,b:c\"], \"additionalProperties\": false}",
+          "actualSchema": "{\"type\": \"object\", \"description\": \"日本語😀,comma:colon \\\"quote\\\" \\\\\\\\ backslash\\nnew line\", \"properties\": {\"a,b:c\": {\"type\": \"string\", \"enum\": [\"雪😀\", \"a:b,c\", \"quote\\\",colon:comma,\", \"odd\\\\\\\"x,y:z\", \"even\\\\\\\\\", \"\\\\u96ea\\n\\r\\t\\b\\f/\"]}}, \"required\": [\"a,b:c\"], \"additionalProperties\": false}",
+          "exactSerializationMatch": true,
+          "parsedEqual": true
+        },
+        {
+          "name": "empty",
+          "status": 200,
+          "seconds": 0.01610189999337308,
+          "expectedPythonSerialization": "{\"type\": \"object\", \"properties\": {}, \"required\": [], \"description\": \"\", \"examples\": [{}, [], null, true, false, 0, 1, -1]}",
+          "actualSchema": "{\"type\": \"object\", \"properties\": {}, \"required\": [], \"description\": \"\", \"examples\": [{}, [], null, true, false, 0, 1, -1]}",
+          "exactSerializationMatch": true,
+          "parsedEqual": true
+        }
+      ],
+      "invalidSchemas": [
+        {
+          "name": "format_string",
+          "status": 400,
+          "seconds": 0.020411299999977928,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "missing_definition",
+          "status": 400,
+          "seconds": 0.008728399996471126,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.json_schema.schema must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "definition_array",
+          "status": 400,
+          "seconds": 0.01596909999352647,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.json_schema.schema must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "missing_schema",
+          "status": 400,
+          "seconds": 0.0014521999983116984,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.json_schema.schema must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "schema_array",
+          "status": 400,
+          "seconds": 0.0013878000027034432,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.json_schema.schema must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "schema_string",
+          "status": 400,
+          "seconds": 0.01287189999857219,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.json_schema.schema must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "schema_null",
+          "status": 400,
+          "seconds": 0.015660499993828125,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.json_schema.schema must be an object",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "name": "unknown_type",
+          "status": 400,
+          "seconds": 0.0015081000019563362,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "response_format.type must be text, json_object, or json_schema",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        }
+      ],
+      "invalidSeeds": [
+        {
+          "seed": -1,
+          "pythonType": "int",
+          "status": 400,
+          "seconds": 0.004000400003860705,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "seed must be an integer from 0 to 4294967295",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "seed": 4294967296,
+          "pythonType": "int",
+          "status": 400,
+          "seconds": 0.02804900000046473,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "seed must be an integer from 0 to 4294967295",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "seed": 1.5,
+          "pythonType": "float",
+          "status": 400,
+          "seconds": 0.01608719999785535,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "seed must be an integer from 0 to 4294967295",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "seed": true,
+          "pythonType": "bool",
+          "status": 400,
+          "seconds": 0.003680900001199916,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "seed must be an integer from 0 to 4294967295",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        },
+        {
+          "seed": "1",
+          "pythonType": "str",
+          "status": 400,
+          "seconds": 0.003969500001403503,
+          "body": {
+            "error": {
+              "code": 400,
+              "message": "seed must be an integer from 0 to 4294967295",
+              "type": "invalid_request_error"
+            }
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "fullEvaluationAudit": {
+      "evidenceSha256": "ffae24b4c64eec38ddc62c32b6a21fc65e1019d6dd71e5903e2b8f03e61ab9eb",
+      "evidence": {
+        "recordedAt": "2026-09-20T02:09:11.703952+00:00",
+        "scope": "Independent read-only data/metric audit; runtime metadata intentionally excluded while parent annotates it.",
+        "passed": true,
+        "findings": [],
+        "report": "eval\\reports\\2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-json-fixed",
+        "resultsBytes": 233960,
+        "resultsSHA256": "65afc48f5af81716e293962094a7b5be6882936c2d7ec0a04bd0cbac4bbb4703",
+        "warmupsSHA256": "1199c3d660197bd7637134f94f804326aaf822b5accad1e172a2cecfdd91f461",
+        "rows": 240,
+        "uniqueKeys": 240,
+        "examples": 120,
+        "stateHashesRegenerated": 240,
+        "references": {
+          "2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx-standard": {
+            "sameSuite": true,
+            "sameOrderedExamples": true,
+            "sameConfigExceptModels": true,
+            "matchingStates": 240,
+            "sameNonce": false,
+            "codeMatches": true
+          },
+          "2026-09-20-gfx1151-diffusiongemma-q8-rocmfpx": {
+            "sameSuite": true,
+            "sameOrderedExamples": true,
+            "sameConfigExceptModels": true,
+            "matchingStates": 240,
+            "sameNonce": false,
+            "codeMatches": true
+          },
+          "2026-09-18-bakeoff": {
+            "sameSuite": true,
+            "sameOrderedExamples": true,
+            "sameConfigExceptModels": true,
+            "matchingStates": 240,
+            "sameNonce": false,
+            "codeMatches": true
+          }
+        },
+        "sourceHashes": {
+          "ag_news-test": true,
+          "boolq-validation": true,
+          "sst5-test": true,
+          "boolq-background": true
+        },
+        "evaluatorCodeHashes": {
+          "src/engine.ts": true,
+          "src/types.ts": true,
+          "src/config.ts": true,
+          "bun.lock": true,
+          "scripts/eval/common.ts": true,
+          "scripts/eval/data.ts": true,
+          "scripts/eval/run.ts": true
+        },
+        "reportCodeHashes": {
+          "scripts/eval/report.ts": true,
+          "scripts/eval/metrics.ts": true
+        },
+        "valid": 237,
+        "terminalFailures": 3,
+        "retriedRequests": 3,
+        "additionalAttempts": 6,
+        "measuredHTTPAttempts": 246,
+        "httpStatusCounts": {
+          "200": 246
+        },
+        "warmups": 2,
+        "warmupAttempts": 2,
+        "metricsIndependentlyRecomputed": true,
+        "cells": [
+          {
+            "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX",
+            "backgroundWords": 0,
+            "complete": true,
+            "macroTaskAccuracy": 0.7333333333333334,
+            "tasks": {
+              "ag_news": {
+                "total": 40,
+                "valid": 38,
+                "correct": 35,
+                "effectiveAccuracy": 0.875,
+                "validAccuracy": 0.9210526315789473,
+                "effectiveAccuracy95Wilson": [
+                  0.738878801611489,
+                  0.945404997490546
+                ],
+                "macroF1": 0.9201680672268907,
+                "brier": 0.1375806680928645,
+                "nll": 0.3164279673238229,
+                "ece": 0.050248472215642825,
+                "scoreMAE": null,
+                "confusion": [
+                  [
+                    9,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    10,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    9,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    3,
+                    7
+                  ]
+                ]
+              },
+              "boolq": {
+                "total": 40,
+                "valid": 40,
+                "correct": 33,
+                "effectiveAccuracy": 0.825,
+                "validAccuracy": 0.825,
+                "effectiveAccuracy95Wilson": [
+                  0.6805000966821229,
+                  0.9125458625396408
+                ],
+                "macroF1": 0.8240100565681961,
+                "brier": 0.1625,
+                "nll": 4.17931052641728,
+                "ece": 0.15,
+                "scoreMAE": null,
+                "confusion": [
+                  [
+                    15,
+                    5
+                  ],
+                  [
+                    2,
+                    18
+                  ]
+                ]
+              },
+              "sst5": {
+                "total": 40,
+                "valid": 39,
+                "correct": 20,
+                "effectiveAccuracy": 0.5,
+                "validAccuracy": 0.5128205128205128,
+                "effectiveAccuracy95Wilson": [
+                  0.35199526933465386,
+                  0.6480047306653461
+                ],
+                "macroF1": 0.4809523809523809,
+                "brier": 0.6676158350488515,
+                "nll": 1.1214668446157898,
+                "ece": 0.2343869002284844,
+                "scoreMAE": 0.47876364559532886,
+                "confusion": [
+                  [
+                    6,
+                    1,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    2,
+                    4,
+                    2,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    2,
+                    4,
+                    0,
+                    2
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    8
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    2,
+                    6
+                  ]
+                ]
+              }
+            },
+            "timing": {
+              "requests": 120,
+              "failures": 3,
+              "firstPassValid": 117,
+              "retriedRequests": 3,
+              "additionalAttempts": 6,
+              "latencyP50Ms": 5167.201549999998,
+              "latencyP95Ms": 8278.11753500009,
+              "latencyMeanMs": 5426.568310833328,
+              "totalSeconds": 651.1881972999993,
+              "effectiveRequestsPerSecond": 0.17967156113257787,
+              "inputTokensMean": 474.8666666666667,
+              "outputTokensMean": 33.3,
+              "firstAttemptInputTokensMean": 446.375,
+              "reportedCachedFraction": 0.0,
+              "lengthLimitedAttempts": 0,
+              "reasoningAttempts": 0,
+              "warnings": []
+            }
+          },
+          {
+            "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX",
+            "backgroundWords": 2048,
+            "complete": true,
+            "macroTaskAccuracy": 0.725,
+            "tasks": {
+              "ag_news": {
+                "total": 40,
+                "valid": 40,
+                "correct": 36,
+                "effectiveAccuracy": 0.9,
+                "validAccuracy": 0.9,
+                "effectiveAccuracy95Wilson": [
+                  0.7694822477247771,
+                  0.9604204713173936
+                ],
+                "macroF1": 0.897440794499618,
+                "brier": 0.18348438437408096,
+                "nll": 0.41892059226817724,
+                "ece": 0.05480198019801971,
+                "scoreMAE": null,
+                "confusion": [
+                  [
+                    10,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    10,
+                    0,
+                    0
+                  ],
+                  [
+                    1,
+                    0,
+                    9,
+                    0
+                  ],
+                  [
+                    1,
+                    0,
+                    2,
+                    7
+                  ]
+                ]
+              },
+              "boolq": {
+                "total": 40,
+                "valid": 40,
+                "correct": 34,
+                "effectiveAccuracy": 0.85,
+                "validAccuracy": 0.85,
+                "effectiveAccuracy95Wilson": [
+                  0.709276756335103,
+                  0.9293881228267964
+                ],
+                "macroF1": 0.85,
+                "brier": 0.15025,
+                "nll": 4.147287180280728,
+                "ece": 0.14749999999999996,
+                "scoreMAE": null,
+                "confusion": [
+                  [
+                    17,
+                    3
+                  ],
+                  [
+                    3,
+                    17
+                  ]
+                ]
+              },
+              "sst5": {
+                "total": 40,
+                "valid": 40,
+                "correct": 17,
+                "effectiveAccuracy": 0.425,
+                "validAccuracy": 0.425,
+                "effectiveAccuracy95Wilson": [
+                  0.28509392559950375,
+                  0.5780493145800892
+                ],
+                "macroF1": 0.39611111111111114,
+                "brier": 0.869506975308642,
+                "nll": 2.07622468955429,
+                "ece": 0.4166388888888888,
+                "scoreMAE": 0.6575,
+                "confusion": [
+                  [
+                    6,
+                    0,
+                    2,
+                    0,
+                    0
+                  ],
+                  [
+                    2,
+                    1,
+                    3,
+                    0,
+                    2
+                  ],
+                  [
+                    0,
+                    0,
+                    3,
+                    4,
+                    1
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    1,
+                    7
+                  ],
+                  [
+                    0,
+                    0,
+                    0,
+                    2,
+                    6
+                  ]
+                ]
+              }
+            },
+            "timing": {
+              "requests": 120,
+              "failures": 0,
+              "firstPassValid": 120,
+              "retriedRequests": 0,
+              "additionalAttempts": 0,
+              "latencyP50Ms": 11505.490399999922,
+              "latencyP95Ms": 16830.960844999947,
+              "latencyMeanMs": 11641.727293333337,
+              "totalSeconds": 1397.0072752000005,
+              "effectiveRequestsPerSecond": 0.08589790628171236,
+              "inputTokensMean": 3201.9666666666667,
+              "outputTokensMean": 30.383333333333333,
+              "firstAttemptInputTokensMean": 3201.9666666666667,
+              "reportedCachedFraction": 0.0,
+              "lengthLimitedAttempts": 0,
+              "reasoningAttempts": 0,
+              "warnings": []
+            }
+          }
+        ],
+        "paired": [
+          {
+            "model": "diffusiongemma-26B-A4B-it-Q8_0_ROCMFPX",
+            "comparisons": [
+              {
+                "backgroundWords": 2048,
+                "bothValid": 117,
+                "predictionsChanged": 18,
+                "correctToWrong": 8,
+                "wrongToCorrect": 6
+              }
+            ]
+          }
+        ],
+        "failures": [
+          {
+            "id": "ag_news:test:7375",
+            "backgroundWords": 0,
+            "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object",
+            "attempts": 3,
+            "httpStatuses": [
+              200,
+              200,
+              200
+            ],
+            "outputTokens": [
+              46,
+              46,
+              46
+            ],
+            "finishReasons": [
+              "stop",
+              "stop",
+              "stop"
+            ]
+          },
+          {
+            "id": "sst5:test:104",
+            "backgroundWords": 0,
+            "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object",
+            "attempts": 3,
+            "httpStatuses": [
+              200,
+              200,
+              200
+            ],
+            "outputTokens": [
+              49,
+              49,
+              49
+            ],
+            "finishReasons": [
+              "stop",
+              "stop",
+              "stop"
+            ]
+          },
+          {
+            "id": "ag_news:test:6369",
+            "backgroundWords": 0,
+            "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object",
+            "attempts": 3,
+            "httpStatuses": [
+              200,
+              200,
+              200
+            ],
+            "outputTokens": [
+              46,
+              46,
+              46
+            ],
+            "finishReasons": [
+              "stop",
+              "stop",
+              "stop"
+            ]
+          }
+        ],
+        "nonce": "e5b704a1-a1b5-4402-9532-e271971b0ec0",
+        "stateReconstruction": {
+          "independentPythonWithECMAScriptWhitespace": {
+            "hashMatches": 240,
+            "wordCountMatches": 240
+          },
+          "productionBunMakeState": {
+            "hashMatches": 240,
+            "wordCountMatches": 240
+          },
+          "auditCorrection": "Python default Unicode whitespace differs from ECMAScript for U+FEFF. Initial audit mismatch was in the audit implementation; all rows match with exact ECMAScript whitespace semantics.",
+          "correctedCase": {
+            "id": "boolq:validation:1017",
+            "firstDifference": 6288,
+            "oldCodepoints": [
+              "0x27",
+              "0x27",
+              "0x57",
+              "0xfeff",
+              "0x20",
+              "0x2f",
+              "0x20"
+            ],
+            "correctCodepoints": [
+              "0x27",
+              "0x27",
+              "0x57",
+              "0x20",
+              "0x2f",
+              "0x20",
+              "0x33"
+            ],
+            "correctStateHash": "cf2fb44136efe4cc4bb447829767c4a4d4addf0f18796ee1ca38336b6f493fbc",
+            "correctStateWords": 2123
+          }
+        }
+      }
+    },
+    "agentFailureReplay": {
+      "selected": 2,
+      "firstPassValid": 2,
+      "goldCorrect": 1,
+      "details": "diagnostics.json: agentAfterFix"
+    }
+  },
+  "originalManifestEnvironment": {
+    "bun": "1.4.2",
+    "cpu": null,
+    "memoryGiB": 0,
+    "os": null,
+    "architecture": "x64",
+    "power": "unknown/battery"
+  },
+  "runFinishedAt": "2026-09-20T02:05:38.71Z",
+  "resultsSha256": "65afc48f5af81716e293962094a7b5be6882936c2d7ec0a04bd0cbac4bbb4703",
+  "measurement": {
+    "expected": 240,
+    "completed": 240,
+    "firstPassValid": 237,
+    "valid": 237,
+    "failed": 3,
+    "retriedRequests": 3,
+    "extraAttempts": 6,
+    "measuredHttpRequests": 246,
+    "excludedWarmups": 2,
+    "nonce": "e5b704a1-a1b5-4402-9532-e271971b0ec0",
+    "terminalFailures": [
+      {
+        "exampleId": "ag_news:test:7375",
+        "backgroundWords": 0,
+        "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object"
+      },
+      {
+        "exampleId": "sst5:test:104",
+        "backgroundWords": 0,
+        "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object"
+      },
+      {
+        "exampleId": "ag_news:test:6369",
+        "backgroundWords": 0,
+        "error": "model output remained invalid after 3 attempt(s): response contains an incomplete JSON object"
+      }
+    ]
+  },
+  "serverStoppedAfterEvaluation": true,
+  "diagnosticRequestsExcludedFromBenchmark": true
+}
